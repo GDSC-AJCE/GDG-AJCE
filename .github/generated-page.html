@@ -1,0 +1,697 @@
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>GDG Study Jam Leaderboard</title>
+  <meta name="theme-color" content="#ffffff">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/lucide@0.468.0/dist/umd/lucide.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.3/dist/chart.umd.min.js"></script>
+<link id="all-fonts-link-font-geist" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700&amp;display=swap"><style id="all-fonts-style-font-geist">.font-geist { font-family: 'Geist', sans-serif !important; }</style><link id="all-fonts-link-font-roboto" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;600;700&amp;display=swap"><style id="all-fonts-style-font-roboto">.font-roboto { font-family: 'Roboto', sans-serif !important; }</style><link id="all-fonts-link-font-montserrat" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&amp;display=swap"><style id="all-fonts-style-font-montserrat">.font-montserrat { font-family: 'Montserrat', sans-serif !important; }</style><link id="all-fonts-link-font-poppins" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&amp;display=swap"><style id="all-fonts-style-font-poppins">.font-poppins { font-family: 'Poppins', sans-serif !important; }</style><link id="all-fonts-link-font-playfair" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700;900&amp;display=swap"><style id="all-fonts-style-font-playfair">.font-playfair { font-family: 'Playfair Display', serif !important; }</style><link id="all-fonts-link-font-instrument-serif" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Serif:wght@400;500;600;700&amp;display=swap"><style id="all-fonts-style-font-instrument-serif">.font-instrument-serif { font-family: 'Instrument Serif', serif !important; }</style><link id="all-fonts-link-font-merriweather" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Merriweather:wght@300;400;700;900&amp;display=swap"><style id="all-fonts-style-font-merriweather">.font-merriweather { font-family: 'Merriweather', serif !important; }</style><link id="all-fonts-link-font-bricolage" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@300;400;500;600;700&amp;display=swap"><style id="all-fonts-style-font-bricolage">.font-bricolage { font-family: 'Bricolage Grotesque', sans-serif !important; }</style><link id="all-fonts-link-font-jakarta" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&amp;display=swap"><style id="all-fonts-style-font-jakarta">.font-jakarta { font-family: 'Plus Jakarta Sans', sans-serif !important; }</style><link id="all-fonts-link-font-manrope" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700;800&amp;display=swap"><style id="all-fonts-style-font-manrope">.font-manrope { font-family: 'Manrope', sans-serif !important; }</style><link id="all-fonts-link-font-space-grotesk" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&amp;display=swap"><style id="all-fonts-style-font-space-grotesk">.font-space-grotesk { font-family: 'Space Grotesk', sans-serif !important; }</style><link id="all-fonts-link-font-work-sans" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@300;400;500;600;700;800&amp;display=swap"><style id="all-fonts-style-font-work-sans">.font-work-sans { font-family: 'Work Sans', sans-serif !important; }</style><link id="all-fonts-link-font-pt-serif" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=PT+Serif:wght@400;700&amp;display=swap"><style id="all-fonts-style-font-pt-serif">.font-pt-serif { font-family: 'PT Serif', serif !important; }</style><link id="all-fonts-link-font-geist-mono" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@300;400;500;600;700&amp;display=swap"><style id="all-fonts-style-font-geist-mono">.font-geist-mono { font-family: 'Geist Mono', monospace !important; }</style><link id="all-fonts-link-font-space-mono" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&amp;display=swap"><style id="all-fonts-style-font-space-mono">.font-space-mono { font-family: 'Space Mono', monospace !important; }</style><link id="all-fonts-link-font-quicksand" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&amp;display=swap"><style id="all-fonts-style-font-quicksand">.font-quicksand { font-family: 'Quicksand', sans-serif !important; }</style><link id="all-fonts-link-font-nunito" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;500;600;700;800&amp;display=swap"><style id="all-fonts-style-font-nunito">.font-nunito { font-family: 'Nunito', sans-serif !important; }</style></head>
+<body class="min-h-screen bg-neutral-50 text-neutral-900 antialiased selection:bg-blue-200/60 selection:text-neutral-900" style="font-family: Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, Apple Color Emoji, Segoe UI Emoji;">
+  <!-- App Shell -->
+  <div class="min-h-screen flex flex-col">
+    <!-- Top Nav -->
+    <header class="sticky top-0 z-30 bg-white/80 backdrop-blur border-b border-neutral-200">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="h-16 flex items-center justify-between">
+          <!-- Brand -->
+          <div class="flex items-center gap-3">
+            <div class="flex items-center gap-1.5">
+              <span class="inline-flex -space-x-1">
+                <span class="h-4 w-2.5 rotate-12 rounded-sm bg-[#34A853] shadow-sm"></span>
+                <span class="h-4 w-2.5 -rotate-12 rounded-sm bg-[#4285F4] shadow-sm"></span>
+                <span class="h-4 w-2.5 rotate-12 rounded-sm bg-[#FBBC04] shadow-sm"></span>
+                <span class="h-4 w-2.5 -rotate-12 rounded-sm bg-[#EA4335] shadow-sm"></span>
+              </span>
+              <span class="text-[15px] font-semibold tracking-tight leading-none">GDG</span>
+            </div>
+            <div class="h-5 w-px bg-neutral-200"></div>
+            <div class="hidden sm:flex flex-col">
+              <span class="text-[14px] font-medium tracking-tight">Study Jam</span>
+              <span class="text-[12px] text-neutral-500">Leaderboard</span>
+            </div>
+          </div>
+
+          <!-- Actions -->
+          <div class="flex items-center gap-2">
+            
+            
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- Page -->
+    <main class="flex-1">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <!-- Page Header -->
+        <div class="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-8">
+          <div>
+            <h1 class="text-3xl md:text-4xl font-semibold tracking-tight">Study Jam Leaderboard</h1>
+            <p class="text-sm text-neutral-600 mt-1">Track member progress across Android, Web, Cloud and ML. Updated daily.</p>
+          </div>
+          <!-- Filters -->
+          <div class="flex flex-col sm:flex-row gap-2 sm:items-center">
+            <!-- Search -->
+            <div class="relative w-full sm:w-72">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" data-lucide="search" class="lucide lucide-search absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-neutral-500"><circle cx="11" cy="11" r="8"></circle><path d="m21 21-4.3-4.3"></path></svg>
+              <input id="searchInput" type="text" placeholder="Search members..." class="w-full rounded-md border border-neutral-200 bg-white pl-9 pr-3 py-2 text-sm text-neutral-900 placeholder-neutral-500 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500/40 focus:border-blue-500">
+            </div>
+
+            <!-- Track Dropdown (custom) -->
+            <div class="relative">
+              
+              
+            </div>
+
+            <!-- Week Dropdown -->
+            <div class="relative">
+              <button id="weekDropdownBtn" class="inline-flex items-center gap-2 rounded-md border border-neutral-200 bg-white px-3 py-2 text-sm font-medium shadow-sm hover:bg-neutral-50 hover:border-neutral-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500/40">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" data-lucide="calendar" class="lucide lucide-calendar h-4 w-4 text-neutral-700"><path d="M8 2v4"></path><path d="M16 2v4"></path><rect width="18" height="18" x="3" y="4" rx="2"></rect><path d="M3 10h18"></path></svg>
+                <span id="weekDropdownLabel" class="">All time</span>
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" data-lucide="chevron-down" class="lucide lucide-chevron-down h-4 w-4 text-neutral-700"><path d="m6 9 6 6 6-6"></path></svg>
+              </button>
+              <div id="weekDropdownMenu" class="hidden absolute right-0 mt-2 w-40 rounded-md border border-neutral-200 bg-white shadow-lg overflow-hidden">
+                <button data-week="all" class="w-full text-left px-3 py-2 text-sm hover:bg-neutral-50">All time</button>
+                <button data-week="w1" class="w-full text-left px-3 py-2 text-sm hover:bg-neutral-50">Week 1</button>
+                <button data-week="w2" class="w-full text-left px-3 py-2 text-sm hover:bg-neutral-50">Week 2</button>
+                <button data-week="w3" class="w-full text-left px-3 py-2 text-sm hover:bg-neutral-50">Week 3</button>
+                <button data-week="w4" class="w-full text-left px-3 py-2 text-sm hover:bg-neutral-50">Week 4</button>
+              </div>
+            </div>
+
+            <!-- Verified toggle (custom) -->
+            
+          </div>
+        </div>
+
+        <!-- Stats -->
+        <section class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
+          <div class="rounded-lg bg-white border border-neutral-200 p-4 shadow-sm">
+            <div class="flex items-center justify-between">
+              <p class="text-sm text-neutral-600">Participants</p>
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" data-lucide="users" class="lucide lucide-users h-4 w-4 text-neutral-700"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M22 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+            </div>
+            <div class="mt-3 flex items-baseline gap-2">
+              <span class="text-2xl font-semibold tracking-tight">124</span>
+              <span class="text-xs text-green-600 inline-flex items-center gap-1">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" data-lucide="trending-up" class="lucide lucide-trending-up h-3.5 w-3.5"><polyline points="22 7 13.5 15.5 8.5 10.5 2 17"></polyline><polyline points="16 7 22 7 22 13"></polyline></svg> +8
+              </span>
+            </div>
+          </div>
+          <div class="rounded-lg bg-white border border-neutral-200 p-4 shadow-sm">
+            <div class="flex items-center justify-between">
+              <p class="text-sm text-neutral-600">Total Points</p>
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" data-lucide="trophy" class="lucide lucide-trophy h-4 w-4 text-neutral-700"><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"></path><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"></path><path d="M4 22h16"></path><path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"></path><path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"></path><path d="M18 2H6v7a6 6 0 0 0 12 0V2Z"></path></svg>
+            </div>
+            <div class="mt-3 flex items-baseline gap-2">
+              <span class="text-2xl font-semibold tracking-tight">18,420</span>
+              <span class="text-xs text-green-600 inline-flex items-center gap-1">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" data-lucide="arrow-up-right" class="lucide lucide-arrow-up-right h-3.5 w-3.5"><path d="M7 7h10v10"></path><path d="M7 17 17 7"></path></svg> +4.2%
+              </span>
+            </div>
+          </div>
+          <div class="rounded-lg bg-white border border-neutral-200 p-4 shadow-sm">
+            <div class="flex items-center justify-between">
+              <p class="text-sm text-neutral-600">Avg. Modules</p>
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" data-lucide="layout-list" class="lucide lucide-layout-list h-4 w-4 text-neutral-700"><rect width="7" height="7" x="3" y="3" rx="1"></rect><rect width="7" height="7" x="3" y="14" rx="1"></rect><path d="M14 4h7"></path><path d="M14 9h7"></path><path d="M14 15h7"></path><path d="M14 20h7"></path></svg>
+            </div>
+            <div class="mt-3 flex items-baseline gap-2">
+              <span class="text-2xl font-semibold tracking-tight">7.8</span>
+              <span class="text-xs text-neutral-500">per member</span>
+            </div>
+          </div>
+          <div class="rounded-lg bg-white border border-neutral-200 p-4 shadow-sm">
+            <div class="flex items-center justify-between">
+              <p class="text-sm text-neutral-600">Active Streaks</p>
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" data-lucide="flame" class="lucide lucide-flame h-4 w-4 text-neutral-700"><path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 2.5z"></path></svg>
+            </div>
+            <div class="mt-3 flex items-baseline gap-2">
+              <span class="text-2xl font-semibold tracking-tight">36</span>
+              <span class="text-xs text-neutral-500">7+ days</span>
+            </div>
+          </div>
+        </section>
+
+        <!-- Top 3 + Chart -->
+        <section class="grid grid-cols-1 lg:grid-cols-3 gap-4 mb-8">
+          <!-- Podium -->
+          <div class="lg:col-span-2 rounded-lg bg-white border border-neutral-200 p-4 shadow-sm">
+            <div class="flex items-center justify-between">
+              <h2 class="text-lg font-semibold tracking-tight">Top Performers</h2>
+              <span class="text-xs text-neutral-500">All time</span>
+            </div>
+            <div class="mt-4 grid grid-cols-1 sm:grid-cols-3 gap-3">
+              <!-- 2nd -->
+              <div class="rounded-md border border-neutral-200 bg-white p-4 flex flex-col items-center text-center hover:border-neutral-300 transition-colors">
+                <div class="flex items-center gap-1 text-neutral-600 text-xs">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" data-lucide="medal" class="lucide lucide-medal h-3.5 w-3.5"><path d="M7.21 15 2.66 7.14a2 2 0 0 1 .13-2.2L4.4 2.8A2 2 0 0 1 6 2h12a2 2 0 0 1 1.6.8l1.6 2.14a2 2 0 0 1 .14 2.2L16.79 15"></path><path d="M11 12 5.12 2.2"></path><path d="m13 12 5.88-9.8"></path><path d="M8 7h8"></path><circle cx="12" cy="17" r="5"></circle><path d="M12 18v-2h-.5"></path></svg>
+                  2nd
+                </div>
+                <img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?q=80&amp;w=200&amp;auto=format&amp;fit=crop" alt="Avatar" class="h-14 w-14 rounded-full object-cover mt-2 ring-2 ring-blue-200">
+                <div class="mt-2 text-sm font-medium">Alex Kim</div>
+                <div class="text-xs text-neutral-500">Web • 2,140 pts</div>
+              </div>
+              <!-- 1st -->
+              <div class="rounded-md border-2 border-neutral-900 bg-neutral-900 text-white p-4 flex flex-col items-center text-center shadow-sm">
+                <div class="flex items-center gap-1 text-amber-300 text-xs">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" data-lucide="crown" class="lucide lucide-crown h-3.5 w-3.5"><path d="M11.562 3.266a.5.5 0 0 1 .876 0L15.39 8.87a1 1 0 0 0 1.516.294L21.183 5.5a.5.5 0 0 1 .798.519l-2.834 10.246a1 1 0 0 1-.956.734H5.81a1 1 0 0 1-.957-.734L2.02 6.02a.5.5 0 0 1 .798-.519l4.276 3.664a1 1 0 0 0 1.516-.294z"></path><path d="M5 21h14"></path></svg>
+                  1st
+                </div>
+                <img src="https://images.unsplash.com/photo-1554151228-14d9def656e4?q=80&amp;w=200&amp;auto=format&amp;fit=crop" alt="Avatar" class="h-16 w-16 rounded-full object-cover mt-2 ring-2 ring-amber-300">
+                <div class="mt-2 text-sm font-medium">Taylor Reed</div>
+                <div class="text-xs text-neutral-200">Android • 2,320 pts</div>
+              </div>
+              <!-- 3rd -->
+              <div class="rounded-md border border-neutral-200 bg-white p-4 flex flex-col items-center text-center hover:border-neutral-300 transition-colors">
+                <div class="flex items-center gap-1 text-neutral-600 text-xs">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" data-lucide="award" class="lucide lucide-award h-3.5 w-3.5"><path d="m15.477 12.89 1.515 8.526a.5.5 0 0 1-.81.47l-3.58-2.687a1 1 0 0 0-1.197 0l-3.586 2.686a.5.5 0 0 1-.81-.469l1.514-8.526"></path><circle cx="12" cy="8" r="6"></circle></svg>
+                  3rd
+                </div>
+                <img src="https://images.unsplash.com/photo-1527980965255-d3b416303d12?q=80&amp;w=200&amp;auto=format&amp;fit=crop" alt="Avatar" class="h-14 w-14 rounded-full object-cover mt-2 ring-2 ring-green-200">
+                <div class="mt-2 text-sm font-medium">Jordan Lee</div>
+                <div class="text-xs text-neutral-500">Cloud • 2,115 pts</div>
+              </div>
+            </div>
+          </div>
+          <!-- Chart -->
+          <div class="rounded-lg bg-white border border-neutral-200 p-4 shadow-sm">
+            <div class="flex items-center justify-between">
+              <h2 class="text-lg font-semibold tracking-tight">Weekly Progress</h2>
+              <span class="text-xs text-neutral-500">Points</span>
+            </div>
+            <div class="mt-3">
+              <div class="relative">
+                <div class="rounded-md border border-neutral-200 p-2">
+                  <div class="relative h-40">
+                    <div class="absolute inset-0">
+                      <canvas id="weeklyChart" style="display: block; box-sizing: border-box; height: 160px; width: 276px;" width="346" height="200" class=""></canvas>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <p class="mt-2 text-xs text-neutral-500">Last 6 weeks across all tracks.</p>
+            </div>
+          </div>
+        </section>
+
+        <!-- Leaderboard Table -->
+        <section class="rounded-lg bg-white border border-neutral-200 shadow-sm overflow-hidden">
+          <div class="px-4 py-3 border-b border-neutral-200 flex items-center justify-between">
+            <h3 class="text-base font-semibold tracking-tight">Leaderboard</h3>
+            <div class="flex items-center gap-2 text-xs text-neutral-500">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" data-lucide="info" class="lucide lucide-info h-3.5 w-3.5"><circle cx="12" cy="12" r="10"></circle><path d="M12 16v-4"></path><path d="M12 8h.01"></path></svg>
+              Click headers to sort
+            </div>
+          </div>
+          <div class="overflow-x-auto">
+            <table class="min-w-full text-sm" data-element-id="aura-emfvj8d5p">
+              <thead class="bg-neutral-50 text-neutral-600">
+                <tr class="border-b border-neutral-200">
+                  <th class="px-4 py-3 text-left font-medium">Rank</th>
+                  <th class="px-4 py-3 text-left font-medium">Member</th>
+                  
+                  <th id="sortModules" class="px-4 py-3 text-left font-medium cursor-pointer select-none hover:text-neutral-900">
+                    <div class="inline-flex items-center gap-1">Modules<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" data-lucide="chevrons-up-down" class="lucide lucide-chevrons-up-down h-3.5 w-3.5"><path d="m7 15 5 5 5-5"></path><path d="m7 9 5-5 5 5"></path></svg></div>
+                  </th>
+                  <th id="sortPoints" class="px-4 py-3 text-left font-medium cursor-pointer select-none hover:text-neutral-900">
+                    <div class="inline-flex gap-1 items-center" data-element-id="aura-emfvj8072">Points<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" data-lucide="chevrons-up-down" class="lucide lucide-chevrons-up-down h-3.5 w-3.5"><path d="m7 15 5 5 5-5"></path><path d="m7 9 5-5 5 5"></path></svg></div>
+                  </th>
+                  <th class="px-4 py-3 text-left font-medium">Streak</th>
+                  <th class="px-4 py-3 text-left font-medium">Progress</th>
+                  <th class="px-4 py-3 text-left font-medium">Last activity</th>
+                  
+                </tr>
+              </thead>
+              <tbody id="leaderboardBody" class="divide-y divide-neutral-200">
+                <!-- Row -->
+                <tr class="hover:bg-neutral-50/60" data-name="Taylor Reed" data-track="Android" data-verified="true" data-modules="12" data-points="2320">
+                  <td class="px-4 py-3">
+                    <span class="inline-flex h-6 w-6 items-center justify-center rounded-md bg-neutral-900 text-white text-xs font-medium">1</span>
+                  </td>
+                  <td class="px-4 py-3">
+                    <div class="flex items-center gap-3">
+                      <img src="https://images.unsplash.com/photo-1554151228-14d9def656e4?q=80&amp;w=100&amp;auto=format&amp;fit=crop" class="h-9 w-9 rounded-full object-cover ring-1 ring-neutral-200" alt="avatar">
+                      <div>
+                        <div class="font-medium">Taylor Reed</div>
+                        <div class="text-xs text-neutral-500">@taylor</div>
+                      </div>
+                    </div>
+                  </td>
+                  
+                  <td class="px-4 py-3">
+                    <span class="font-medium">12</span>
+                  </td>
+                  <td class="px-4 py-3">
+                    <span class="font-medium">2,320</span>
+                  </td>
+                  <td class="px-4 py-3">
+                    <span class="inline-flex items-center gap-1 text-neutral-700"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" data-lucide="flame" class="lucide lucide-flame h-4 w-4 text-orange-500"><path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 2.5z"></path></svg>9d</span>
+                  </td>
+                  <td class="px-4 py-3">
+                    <div class="w-40">
+                      <div class="h-2 w-full rounded-full bg-neutral-200 overflow-hidden">
+                        <div class="h-full bg-neutral-900" style="width:85%"></div>
+                      </div>
+                      <div class="mt-1 text-[11px] text-neutral-500">85% of track</div>
+                    </div>
+                  </td>
+                  <td class="px-4 py-3">
+                    <span class="text-xs text-neutral-600">2h ago</span>
+                  </td>
+                  <td class="px-4 py-3">
+                    
+                  </td>
+                </tr>
+
+                <tr class="hover:bg-neutral-50/60" data-name="Alex Kim" data-track="Web" data-verified="true" data-modules="11" data-points="2140">
+                  <td class="px-4 py-3">
+                    <span class="inline-flex h-6 w-6 items-center justify-center rounded-md bg-neutral-100 text-neutral-900 text-xs font-medium">2</span>
+                  </td>
+                  <td class="px-4 py-3">
+                    <div class="flex items-center gap-3">
+                      <img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?q=80&amp;w=100&amp;auto=format&amp;fit=crop" class="h-9 w-9 rounded-full object-cover ring-1 ring-neutral-200" alt="avatar">
+                      <div>
+                        <div class="font-medium">Alex Kim</div>
+                        <div class="text-xs text-neutral-500">@alex</div>
+                      </div>
+                    </div>
+                  </td>
+                  
+                  <td class="px-4 py-3"><span class="font-medium">11</span></td>
+                  <td class="px-4 py-3"><span class="font-medium">2,140</span></td>
+                  <td class="px-4 py-3"><span class="inline-flex items-center gap-1 text-neutral-700"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" data-lucide="flame" class="lucide lucide-flame h-4 w-4 text-orange-500"><path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 2.5z"></path></svg>7d</span></td>
+                  <td class="px-4 py-3">
+                    <div class="w-40">
+                      <div class="h-2 w-full rounded-full bg-neutral-200 overflow-hidden">
+                        <div class="h-full bg-neutral-900" style="width:78%"></div>
+                      </div>
+                      <div class="mt-1 text-[11px] text-neutral-500">78% of track</div>
+                    </div>
+                  </td>
+                  <td class="px-4 py-3"><span class="text-xs text-neutral-600">5h ago</span></td>
+                  <td class="px-4 py-3">
+                    
+                  </td>
+                </tr>
+
+                <tr class="hover:bg-neutral-50/60" data-name="Jordan Lee" data-track="Cloud" data-verified="false" data-modules="10" data-points="2115">
+                  <td class="px-4 py-3">
+                    <span class="inline-flex h-6 w-6 items-center justify-center rounded-md bg-neutral-100 text-neutral-900 text-xs font-medium">3</span>
+                  </td>
+                  <td class="px-4 py-3">
+                    <div class="flex items-center gap-3">
+                      <img src="https://images.unsplash.com/photo-1527980965255-d3b416303d12?q=80&amp;w=100&amp;auto=format&amp;fit=crop" class="h-9 w-9 rounded-full object-cover ring-1 ring-neutral-200" alt="avatar">
+                      <div>
+                        <div class="font-medium">Jordan Lee</div>
+                        <div class="text-xs text-neutral-500">@jordan</div>
+                      </div>
+                    </div>
+                  </td>
+                  
+                  <td class="px-4 py-3"><span class="font-medium">10</span></td>
+                  <td class="px-4 py-3"><span class="font-medium">2,115</span></td>
+                  <td class="px-4 py-3"><span class="inline-flex items-center gap-1 text-neutral-700"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" data-lucide="flame" class="lucide lucide-flame h-4 w-4 text-orange-500"><path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 2.5z"></path></svg>6d</span></td>
+                  <td class="px-4 py-3">
+                    <div class="w-40">
+                      <div class="h-2 w-full rounded-full bg-neutral-200 overflow-hidden">
+                        <div class="h-full bg-neutral-900" style="width:72%"></div>
+                      </div>
+                      <div class="mt-1 text-[11px] text-neutral-500">72% of track</div>
+                    </div>
+                  </td>
+                  <td class="px-4 py-3"><span class="text-xs text-neutral-600">1d ago</span></td>
+                  
+                </tr>
+
+                <tr class="hover:bg-neutral-50/60" data-name="Priya Shah" data-track="ML" data-verified="true" data-modules="9" data-points="1960">
+                  <td class="px-4 py-3">
+                    <span class="inline-flex h-6 w-6 items-center justify-center rounded-md bg-neutral-100 text-neutral-900 text-xs font-medium">4</span>
+                  </td>
+                  <td class="px-4 py-3">
+                    <div class="flex items-center gap-3">
+                      <img src="https://images.unsplash.com/photo-1527980965255-d3b416303d12?q=80&amp;w=100&amp;auto=format&amp;fit=crop" class="h-9 w-9 rounded-full object-cover ring-1 ring-neutral-200" alt="avatar">
+                      <div>
+                        <div class="font-medium">Priya Shah</div>
+                        <div class="text-xs text-neutral-500">@priya</div>
+                      </div>
+                    </div>
+                  </td>
+                  
+                  <td class="px-4 py-3"><span class="font-medium">9</span></td>
+                  <td class="px-4 py-3"><span class="font-medium">1,960</span></td>
+                  <td class="px-4 py-3"><span class="inline-flex items-center gap-1 text-neutral-700"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" data-lucide="flame" class="lucide lucide-flame h-4 w-4 text-orange-500"><path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 2.5z"></path></svg>5d</span></td>
+                  <td class="pt-3 pr-4 pb-3 pl-4" data-element-id="aura-emfvj8dyq">
+                    <div class="w-40">
+                      <div class="h-2 w-full rounded-full bg-neutral-200 overflow-hidden">
+                        <div class="h-full bg-neutral-900" style="width:64%"></div>
+                      </div>
+                      <div class="mt-1 text-[11px] text-neutral-500">64% of track</div>
+                    </div>
+                  </td>
+                  <td class="px-4 py-3"><span class="text-xs text-neutral-600">2d ago</span></td>
+                  
+                </tr>
+
+                <tr class="hover:bg-neutral-50/60" data-name="Chris Evans" data-track="Android" data-verified="false" data-modules="7" data-points="1580">
+                  <td class="px-4 py-3">
+                    <span class="inline-flex h-6 w-6 items-center justify-center rounded-md bg-neutral-100 text-neutral-900 text-xs font-medium">5</span>
+                  </td>
+                  <td class="px-4 py-3">
+                    <div class="flex items-center gap-3">
+                      <img src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?q=80&amp;w=100&amp;auto=format&amp;fit=crop" class="h-9 w-9 rounded-full object-cover ring-1 ring-neutral-200" alt="avatar">
+                      <div>
+                        <div class="font-medium">Chris Evans</div>
+                        <div class="text-xs text-neutral-500">@chris</div>
+                      </div>
+                    </div>
+                  </td>
+                  
+                  <td class="px-4 py-3"><span class="font-medium">7</span></td>
+                  <td class="px-4 py-3"><span class="font-medium">1,580</span></td>
+                  <td class="px-4 py-3"><span class="inline-flex items-center gap-1 text-neutral-700"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" data-lucide="flame" class="lucide lucide-flame h-4 w-4 text-orange-500"><path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 2.5z"></path></svg>3d</span></td>
+                  <td class="px-4 py-3">
+                    <div class="w-40">
+                      <div class="h-2 w-full rounded-full bg-neutral-200 overflow-hidden">
+                        <div class="h-full bg-neutral-900" style="width:48%"></div>
+                      </div>
+                      <div class="mt-1 text-[11px] text-neutral-500">48% of track</div>
+                    </div>
+                  </td>
+                  <td class="px-4 py-3"><span class="text-xs text-neutral-600">3d ago</span></td>
+                  
+                </tr>
+
+                <tr class="hover:bg-neutral-50/60" data-name="Sam Park" data-track="Cloud" data-verified="true" data-modules="6" data-points="1490">
+                  <td class="px-4 py-3">
+                    <span class="inline-flex h-6 w-6 items-center justify-center rounded-md bg-neutral-100 text-neutral-900 text-xs font-medium">6</span>
+                  </td>
+                  <td class="px-4 py-3">
+                    <div class="flex items-center gap-3">
+                      <img src="https://images.unsplash.com/photo-1547425260-76bcadfb4f2c?q=80&amp;w=100&amp;auto=format&amp;fit=crop" class="h-9 w-9 rounded-full object-cover ring-1 ring-neutral-200" alt="avatar">
+                      <div>
+                        <div class="font-medium">Sam Park</div>
+                        <div class="text-xs text-neutral-500">@sam</div>
+                      </div>
+                    </div>
+                  </td>
+                  
+                  <td class="px-4 py-3"><span class="font-medium">6</span></td>
+                  <td class="px-4 py-3"><span class="font-medium">1,490</span></td>
+                  <td class="px-4 py-3"><span class="inline-flex items-center gap-1 text-neutral-700"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" data-lucide="flame" class="lucide lucide-flame h-4 w-4 text-orange-500"><path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 2.5z"></path></svg>2d</span></td>
+                  <td class="px-4 py-3">
+                    <div class="w-40">
+                      <div class="h-2 w-full rounded-full bg-neutral-200 overflow-hidden">
+                        <div class="h-full bg-neutral-900" style="width:41%"></div>
+                      </div>
+                      <div class="mt-1 text-[11px] text-neutral-500">41% of track</div>
+                    </div>
+                  </td>
+                  <td class="px-4 py-3"><span class="text-xs text-neutral-600">4d ago</span></td>
+                  <td class="px-4 py-3">
+                    
+                  </td>
+                </tr>
+
+                <tr class="hover:bg-neutral-50/60" data-name="Mina Patel" data-track="Web" data-verified="true" data-modules="5" data-points="1350">
+                  <td class="px-4 py-3">
+                    <span class="inline-flex h-6 w-6 items-center justify-center rounded-md bg-neutral-100 text-neutral-900 text-xs font-medium">7</span>
+                  </td>
+                  <td class="px-4 py-3">
+                    <div class="flex items-center gap-3">
+                      <img src="https://images.unsplash.com/photo-1544006659-f0b21884ce1d?q=80&amp;w=100&amp;auto=format&amp;fit=crop" class="h-9 w-9 rounded-full object-cover ring-1 ring-neutral-200" alt="avatar">
+                      <div>
+                        <div class="font-medium">Mina Patel</div>
+                        <div class="text-xs text-neutral-500">@mina</div>
+                      </div>
+                    </div>
+                  </td>
+                  
+                  <td class="px-4 py-3"><span class="font-medium">5</span></td>
+                  <td class="px-4 py-3"><span class="font-medium">1,350</span></td>
+                  <td class="px-4 py-3"><span class="inline-flex items-center gap-1 text-neutral-700"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" data-lucide="flame" class="lucide lucide-flame h-4 w-4 text-orange-500"><path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 2.5z"></path></svg>2d</span></td>
+                  <td class="px-4 py-3">
+                    <div class="w-40">
+                      <div class="h-2 w-full rounded-full bg-neutral-200 overflow-hidden">
+                        <div class="h-full bg-neutral-900" style="width:36%"></div>
+                      </div>
+                      <div class="mt-1 text-[11px] text-neutral-500">36% of track</div>
+                    </div>
+                  </td>
+                  <td class="px-4 py-3"><span class="text-xs text-neutral-600">5d ago</span></td>
+                  
+                </tr>
+
+                <tr class="hover:bg-neutral-50/60" data-name="Diego Ramos" data-track="ML" data-verified="false" data-modules="4" data-points="1180">
+                  <td class="px-4 py-3">
+                    <span class="inline-flex h-6 w-6 items-center justify-center rounded-md bg-neutral-100 text-neutral-900 text-xs font-medium">8</span>
+                  </td>
+                  <td class="px-4 py-3">
+                    <div class="flex items-center gap-3">
+                      <img src="https://images.unsplash.com/photo-1527980965255-d3b416303d12?q=80&amp;w=100&amp;auto=format&amp;fit=crop" class="h-9 w-9 rounded-full object-cover ring-1 ring-neutral-200" alt="avatar">
+                      <div>
+                        <div class="font-medium">Diego Ramos</div>
+                        <div class="text-xs text-neutral-500">@diego</div>
+                      </div>
+                    </div>
+                  </td>
+                  
+                  <td class="px-4 py-3"><span class="font-medium">4</span></td>
+                  <td class="px-4 py-3"><span class="font-medium">1,180</span></td>
+                  <td class="px-4 py-3"><span class="inline-flex items-center gap-1 text-neutral-700"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" data-lucide="flame" class="lucide lucide-flame h-4 w-4 text-orange-500"><path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 2.5z"></path></svg>1d</span></td>
+                  <td class="px-4 py-3">
+                    <div class="w-40">
+                      <div class="h-2 w-full rounded-full bg-neutral-200 overflow-hidden">
+                        <div class="h-full bg-neutral-900" style="width:29%"></div>
+                      </div>
+                      <div class="mt-1 text-[11px] text-neutral-500">29% of track</div>
+                    </div>
+                  </td>
+                  <td class="px-4 py-3"><span class="text-xs text-neutral-600">6d ago</span></td>
+                  <td class="px-4 py-3">
+                    
+                  </td>
+                </tr>
+
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <!-- Footer -->
+        <footer class="text-xs text-neutral-500 text-center pt-10 pb-10" data-element-id="aura-emfvj71vg">
+          <div class="inline-flex items-center gap-2">
+            <span class="inline-flex -space-x-1">
+              <span class="h-3 w-2.5 rotate-12 rounded-sm bg-[#34A853]"></span>
+              <span class="h-3 w-2.5 -rotate-12 rounded-sm bg-[#4285F4]"></span>
+              <span class="h-3 w-2.5 rotate-12 rounded-sm bg-[#FBBC04]"></span>
+              <span class="h-3 w-2.5 -rotate-12 rounded-sm bg-[#EA4335]"></span>
+            </span>
+            <span class="">Google Developer Groups • Study Jam</span>
+          </div>
+        </footer>
+      </div>
+    </main>
+  </div>
+
+  <!-- Scripts -->
+  <script>
+    // Icons
+    lucide.createIcons({ attrs: { "stroke-width": 1.5 } });
+
+    // Dropdown helpers
+    function setupDropdown(btnId, menuId, labelId, onSelect) {
+      const btn = document.getElementById(btnId);
+      const menu = document.getElementById(menuId);
+      const label = labelId ? document.getElementById(labelId) : null;
+
+      function toggle(open) {
+        menu.classList.toggle('hidden', !open);
+      }
+      btn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const open = menu.classList.contains('hidden');
+        document.querySelectorAll('[id$="DropdownMenu"]').forEach(m => m.classList.add('hidden'));
+        toggle(open);
+      });
+      menu.querySelectorAll('button').forEach(item => {
+        item.addEventListener('click', () => {
+          const text = item.textContent.trim();
+          if (label) label.textContent = text;
+          onSelect && onSelect(item);
+          toggle(false);
+        });
+      });
+      document.addEventListener('click', (e) => {
+        if (!menu.contains(e.target) && e.target !== btn) toggle(false);
+      });
+    }
+
+    // Filters
+    const tbody = document.getElementById('leaderboardBody');
+    const rows = Array.from(tbody.querySelectorAll('tr'));
+    const searchInput = document.getElementById('searchInput');
+    let currentTrack = 'all';
+    let verifiedOnly = false;
+
+    function applyFilters() {
+      const query = searchInput.value.trim().toLowerCase();
+      rows.forEach(row => {
+        const name = row.dataset.name.toLowerCase();
+        const track = row.dataset.track;
+        const verified = row.dataset.verified === 'true';
+        const matchesSearch = !query || name.includes(query);
+        const matchesTrack = currentTrack === 'all' || currentTrack === track;
+        const matchesVerified = !verifiedOnly || verified;
+        const show = matchesSearch && matchesTrack && matchesVerified;
+        row.classList.toggle('hidden', !show);
+      });
+    }
+
+    searchInput.addEventListener('input', applyFilters);
+
+    setupDropdown('trackDropdownBtn', 'trackDropdownMenu', 'trackDropdownLabel', (item) => {
+      currentTrack = item.dataset.track || 'all';
+      applyFilters();
+    });
+
+    setupDropdown('weekDropdownBtn', 'weekDropdownMenu', 'weekDropdownLabel', (item) => {
+      // Placeholder: hook into chart update or dataset filtering if weeks are implemented
+      // For now we just change the label
+    });
+
+    // Verified toggle
+    const verifiedToggle = document.getElementById('verifiedToggle');
+    verifiedToggle.addEventListener('click', () => {
+      verifiedOnly = !verifiedOnly;
+      const trackEl = verifiedToggle.querySelector('.track');
+      const thumbEl = verifiedToggle.querySelector('.thumb');
+      trackEl.classList.toggle('bg-neutral-200', !verifiedOnly);
+      trackEl.classList.toggle('bg-green-500', verifiedOnly);
+      thumbEl.style.transform = verifiedOnly ? 'translateX(16px)' : 'translateX(0)';
+      applyFilters();
+    });
+
+    // Sorting
+    function sortBy(attr, numeric = true, dir = 'desc') {
+      const visibleRows = rows.slice().filter(r => !r.classList.contains('hidden'));
+      visibleRows.sort((a, b) => {
+        let va = a.dataset[attr];
+        let vb = b.dataset[attr];
+        if (numeric) {
+          va = Number(va);
+          vb = Number(vb);
+        } else {
+          va = String(va).toLowerCase();
+          vb = String(vb).toLowerCase();
+        }
+        return dir === 'asc' ? (va > vb ? 1 : va < vb ? -1 : 0) : (va < vb ? 1 : va > vb ? -1 : 0);
+      });
+      visibleRows.forEach((r, i) => {
+        tbody.appendChild(r);
+        // update rank cell on sort
+        const rankEl = r.querySelector('td:first-child span');
+        rankEl.textContent = (i + 1).toString();
+        if (i === 0) {
+          rankEl.className = "inline-flex h-6 w-6 items-center justify-center rounded-md bg-neutral-900 text-white text-xs font-medium";
+        } else {
+          rankEl.className = "inline-flex h-6 w-6 items-center justify-center rounded-md bg-neutral-100 text-neutral-900 text-xs font-medium";
+        }
+      });
+    }
+
+    let pointsDir = 'desc';
+    let modulesDir = 'desc';
+    document.getElementById('sortPoints').addEventListener('click', () => {
+      pointsDir = pointsDir === 'desc' ? 'asc' : 'desc';
+      sortBy('points', true, pointsDir);
+    });
+    document.getElementById('sortModules').addEventListener('click', () => {
+      modulesDir = modulesDir === 'desc' ? 'asc' : 'desc';
+      sortBy('modules', true, modulesDir);
+    });
+
+    // Export CSV
+    document.getElementById('exportBtn').addEventListener('click', () => {
+      const headers = ["Rank","Name","Handle","Track","Modules","Points","Streak","Last Activity","Verified"];
+      const visible = Array.from(tbody.querySelectorAll('tr')).filter(r => !r.classList.contains('hidden'));
+      const rowsCsv = visible.map((tr, idx) => {
+        const tds = tr.querySelectorAll('td');
+        const rank = idx + 1;
+        const name = tds[1].querySelector('.font-medium')?.textContent.trim() || '';
+        const handle = tds[1].querySelector('.text-xs')?.textContent.trim() || '';
+        const track = tr.dataset.track;
+        const modules = tr.dataset.modules;
+        const points = tr.dataset.points;
+        const streak = tds[5].innerText.trim();
+        const progress = ''; // intentionally omitted in CSV
+        const last = tds[7].innerText.trim();
+        const verified = tr.dataset.verified === 'true' ? 'Yes' : 'No';
+        return [rank, name, handle, track, modules, points, streak, last, verified].map(v => `"${String(v).replace(/"/g, '""')}"`).join(',');
+      });
+      const blob = new Blob([headers.join(',') + '\n' + rowsCsv.join('\n')], { type: 'text/csv;charset=utf-8;' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'gdg-study-jam-leaderboard.csv';
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      URL.revokeObjectURL(url);
+    });
+
+    // Upload (stub)
+    document.getElementById('uploadBtn').addEventListener('click', () => {
+      alert('Upload flow not connected. Hook this to your Study Jam exports or Google Sheets.');
+    });
+
+    // Chart.js: Weekly points trend
+    const ctx = document.getElementById('weeklyChart');
+    const gradient = ctx.getContext('2d').createLinearGradient(0, 0, 0, 160);
+    gradient.addColorStop(0, 'rgba(17,17,17,0.18)');
+    gradient.addColorStop(1, 'rgba(17,17,17,0.02)');
+    new Chart(ctx, {
+      type: 'line',
+      data: {
+        labels: ['Wk 1','Wk 2','Wk 3','Wk 4','Wk 5','Wk 6'],
+        datasets: [{
+          label: 'Points',
+          data: [2400, 2750, 3100, 2950, 3320, 3610],
+          borderColor: 'rgb(17,17,17)',
+          backgroundColor: gradient,
+          fill: true,
+          tension: 0.35,
+          pointRadius: 2.5,
+          pointHoverRadius: 4,
+        }]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+          legend: { display: false },
+          tooltip: {
+            displayColors: false,
+            backgroundColor: 'rgb(17,17,17)',
+            padding: 8,
+            titleColor: '#fff',
+            bodyColor: '#fff',
+            cornerRadius: 6
+          }
+        },
+        scales: {
+          x: {
+            grid: { display: false },
+            ticks: { color: '#737373', font: { size: 11 } }
+          },
+          y: {
+            grid: { color: 'rgba(0,0,0,0.06)' },
+            ticks: { color: '#737373', font: { size: 11 } }
+          }
+        }
+      }
+    });
+  </script>
+
+</body></html>
