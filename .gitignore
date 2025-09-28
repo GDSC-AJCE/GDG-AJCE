@@ -22,3 +22,8 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+.github/workflows
+.env
+.env.local
+.env.development.local
+.env.test.local
