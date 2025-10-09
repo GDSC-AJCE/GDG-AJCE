@@ -11,9 +11,12 @@ function normalizeRows(rows) {
     username: r.name || r.username || r.Username || r.user || '',
     link: r.handle || r.link || r.profile || '',
     streak: Number(r.streak || r.Streak || 0),
-    syllabusCompleted: Number(r.syllabusCompleted || r.SyllabusCompleted || r.syllabus || r.Syllabus || 0),
-    skillBadges: Number(r.skillBadges || r.SkillBadges || r.badges || 0),
-    arcadeGame: Number(r.arcadeGames || r.ArcadeGames || r.arcade || r.arcadeGame || 0)
+    syllabusCompleted: Number(r.syllabusCompleted || r.SyllabusCompleted || r.syllabus || r.Syllabus || r.syllabusCompleted || 0),
+    skillBadges: Number(r.skillBadges || r.SkillBadges || r.badges || r.skill_badges || 0),
+    arcadeGame: Number(r.arcadeGames || r.ArcadeGames || r.arcade || r.arcadeGame || r.arcade_Game || 0),
+    points: Number(r.points || r.Points || r.score || 0),
+    modules: Number(r.modules || r.Modules || r.modulesCompleted || 0),
+    verified: (r.verified === true) || (String(r.verified || r.Verified || '').toLowerCase() === 'yes')
   }));
 }
 
@@ -38,6 +41,126 @@ function readDataFile() {
 
   return null;
 }
+
+// --- New utility functions ---
+
+function getRows() {
+  const rows = readDataFile();
+  if (!rows) return [];
+  return normalizeRows(rows);
+}
+
+function filterRows(rows, { search, track, week, verifiedOnly } = {}) {
+  let out = rows;
+  if (search) {
+    const term = String(search).toLowerCase();
+    out = out.filter(r => (r.username || '').toLowerCase().includes(term) || (r.link || '').toLowerCase().includes(term));
+  }
+
+  // track and week filters are domain-specific; if absent on rows, this will be no-op
+  if (track && track !== 'all') {
+    out = out.filter(r => String(r.track || 'all') === String(track));
+  }
+
+  if (week && week !== 'all') {
+    // If rows have a week field, filter by it. Otherwise ignore.
+    out = out.filter(r => String(r.week || 'all') === String(week));
+  }
+
+  if (verifiedOnly) {
+    out = out.filter(r => !!r.verified);
+  }
+
+  return out;
+}
+
+function sortRows(rows, field = 'skillBadges', direction = 'desc') {
+  const sorted = [...rows].sort((a, b) => {
+    const aV = (a[field] == null) ? 0 : a[field];
+    const bV = (b[field] == null) ? 0 : b[field];
+    if (typeof aV === 'string') return direction === 'asc' ? aV.localeCompare(bV) : bV.localeCompare(aV);
+    return direction === 'asc' ? aV - bV : bV - aV;
+  });
+  return sorted;
+}
+
+function assignPlaces(rows) {
+  return rows.map((r, idx) => ({ place: idx + 1, ...r }));
+}
+
+function getLeaderboard(options = {}) {
+  const { search, track, week, verifiedOnly, sortField = 'skillBadges', sortDir = 'desc', limit } = options;
+  let rows = getRows();
+  rows = filterRows(rows, { search, track, week, verifiedOnly });
+  rows = sortRows(rows, sortField, sortDir);
+  rows = assignPlaces(rows);
+  if (limit) return rows.slice(0, Number(limit));
+  return rows;
+}
+
+function computeStats(rows) {
+  const participants = rows.length;
+  const totalPoints = rows.reduce((s, r) => s + (r.points || 0), 0);
+  const avgModules = participants ? (rows.reduce((s, r) => s + (r.modules || 0), 0) / participants) : 0;
+  const activeStreaks = rows.filter(r => (r.streak || 0) > 0).length;
+  return {
+    participants,
+    totalPoints,
+    avgModules: Number(avgModules.toFixed(2)),
+    activeStreaks
+  };
+}
+
+function topPerformers(n = 3) {
+  const rows = getLeaderboard({ sortField: 'skillBadges', sortDir: 'desc', limit: n });
+  return rows;
+}
+
+function weeklyData() {
+  // If rows contain week/points per week, aggregate. Otherwise generate a simple weekly split of total points.
+  const rows = getRows();
+  const weeks = [];
+  if (rows.some(r => r.week)) {
+    const map = {};
+    rows.forEach(r => {
+      const w = r.week || 'unknown';
+      map[w] = (map[w] || 0) + (r.points || 0);
+    });
+    Object.keys(map).forEach((k, i) => weeks.push({ week: k, points: map[k] }));
+    return weeks;
+  }
+
+  // fallback: split total points into 6 weeks roughly
+  const total = rows.reduce((s, r) => s + (r.points || 0), 0);
+  const per = Math.round(total / 6) || 0;
+  for (let i = 1; i <= 6; i++) weeks.push({ week: `Wk ${i}`, points: per * i });
+  return weeks;
+}
+
+function exportCSV(rows) {
+  // Build header and CSV string
+  const header = ['place', 'username', 'link', 'streak', 'syllabusCompleted', 'skillBadges', 'arcadeGame', 'points', 'modules', 'verified'];
+  const lines = [header.join(',')];
+  rows.forEach(r => {
+    const vals = header.map(h => {
+      const v = r[h] == null ? '' : r[h];
+      // Escape quotes
+      return typeof v === 'string' && v.includes(',') ? `"${v.replace(/"/g, '""')}"` : v;
+    });
+    lines.push(vals.join(','));
+  });
+  return lines.join('\n');
+}
+
+module.exports = {
+  readDataFile,
+  rankBySkill,
+  getLeaderboard,
+  computeStats,
+  topPerformers,
+  weeklyData,
+  exportCSV
+};
 
 module.exports = {
   readDataFile,
