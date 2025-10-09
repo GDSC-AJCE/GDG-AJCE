@@ -14,14 +14,38 @@ app.use(express.json());
 // In-memory storage for parsed leaderboard
 let leaderboardData = [];
 
-// Serve stored JSON file if present
-const DATA_FILE = path.join(__dirname, 'leaderboard.json');
-if (fs.existsSync(DATA_FILE)) {
+// Data files
+const DATA_DIR = path.join(__dirname, 'data');
+const JSON_DATA_FILE = path.join(__dirname, 'leaderboard.json');
+const XLSX_FILE = path.join(DATA_DIR, 'leaderboard.xlsx');
+
+// Ensure data directory exists
+if (!fs.existsSync(DATA_DIR)) {
+  fs.mkdirSync(DATA_DIR, { recursive: true });
+}
+
+// Load existing JSON if present (used to generate XLSX if needed)
+if (fs.existsSync(JSON_DATA_FILE)) {
   try {
-    leaderboardData = JSON.parse(fs.readFileSync(DATA_FILE, 'utf8'));
+    leaderboardData = JSON.parse(fs.readFileSync(JSON_DATA_FILE, 'utf8'));
     console.log('Loaded existing leaderboard.json');
   } catch (err) {
     console.warn('Could not parse leaderboard.json', err.message);
+  }
+}
+
+// If XLSX doesn't exist, generate a dummy Excel from leaderboardData (or from JSON file)
+if (!fs.existsSync(XLSX_FILE)) {
+  try {
+    const sheet = XLSX.utils.json_to_sheet(leaderboardData.length ? leaderboardData : [{ id: '1', name: 'Demo User', handle: '@demo', points: 100 }]);
+    const book = {
+      SheetNames: ['Sheet1'],
+      Sheets: { 'Sheet1': sheet }
+    };
+    XLSX.writeFile(book, XLSX_FILE);
+    console.log('Generated dummy Excel at', XLSX_FILE);
+  } catch (err) {
+    console.warn('Could not generate XLSX file', err.message);
   }
 }
 
@@ -71,13 +95,57 @@ app.post('/upload', upload.single('file'), (req, res) => {
 
 // Return parsed leaderboard JSON
 app.get('/api/leaderboard', (req, res) => {
+  // Prefer reading from the Excel file so frontend can fetch leaderboard from spreadsheet
+  try {
+    if (fs.existsSync(XLSX_FILE)) {
+      const workbook = XLSX.readFile(XLSX_FILE);
+      const sheetName = workbook.SheetNames[0];
+      const sheet = workbook.Sheets[sheetName];
+      let json = XLSX.utils.sheet_to_json(sheet, { defval: null });
+      // Normalize keys and compute place by skillBadges
+      json = json.map(r => ({
+        username: r.name || r.username || r.Name || r.Username || '',
+        link: r.handle || r.link || r.profile || '',
+        streak: Number(r.streak || r.Streak || 0),
+        syllabusCompleted: Number(r.syllabusCompleted || r.SyllabusCompleted || r.syllabus || 0),
+        skillBadges: Number(r.skillBadges || r.SkillBadges || r.badges || 0),
+        arcadeGame: Number(r.arcadeGames || r.ArcadeGames || r.arcade || 0)
+      }));
+
+      json = json.sort((a, b) => b.skillBadges - a.skillBadges).map((r, idx) => ({ place: idx + 1, ...r }));
+      return res.json(json);
+    }
+
+    // Try CSV fallback
+    const CSV_FILE = path.join(DATA_DIR, 'leaderboard.csv');
+    if (fs.existsSync(CSV_FILE)) {
+      const workbook = XLSX.readFile(CSV_FILE, { type: 'file' });
+      const sheetName = workbook.SheetNames[0];
+      const sheet = workbook.Sheets[sheetName];
+      let json = XLSX.utils.sheet_to_json(sheet, { defval: null });
+      json = json.map(r => ({
+        username: r.name || r.username || r.Name || r.Username || '',
+        link: r.handle || r.link || r.profile || '',
+        streak: Number(r.streak || r.Streak || 0),
+        syllabusCompleted: Number(r.syllabusCompleted || r.SyllabusCompleted || r.syllabus || 0),
+        skillBadges: Number(r.skillBadges || r.SkillBadges || r.badges || 0),
+        arcadeGame: Number(r.arcadeGames || r.ArcadeGames || r.arcade || 0)
+      }));
+      json = json.sort((a, b) => b.skillBadges - a.skillBadges).map((r, idx) => ({ place: idx + 1, ...r }));
+      return res.json(json);
+    }
+  } catch (err) {
+    console.error('Error reading data file for /api/leaderboard:', err.message);
+  }
+
+  // Fallback to in-memory JSON
   res.json(leaderboardData);
 });
 
 // Serve static uploaded JSON for debug
 app.get('/api/leaderboard.json', (req, res) => {
-  if (fs.existsSync(DATA_FILE)) {
-    res.sendFile(DATA_FILE);
+  if (fs.existsSync(JSON_DATA_FILE)) {
+    res.sendFile(JSON_DATA_FILE);
   } else {
     res.status(404).json({ error: 'No leaderboard.json available' });
   }

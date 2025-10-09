@@ -9,3 +9,16 @@ Start:
 1. cd Backend_Express
 2. npm install
 3. npm run dev  (nodemon) or npm start
+
+
+API response changes:
+
+- GET /api/leaderboard now returns rows normalized to the following fields:
+
+  - place (computed rank based on skillBadges desc)
+  - username
+  - link (profile link/handle)
+  - streak
+  - syllabusCompleted
+  - skillBadges
+  - arcadeGame
