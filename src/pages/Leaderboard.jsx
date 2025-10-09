@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Users, Trophy, LayoutList, Flame, Calendar, Download } from 'lucide-react';
 
 // Components
@@ -15,6 +15,28 @@ import { mockLeaderboardData, mockStatsData, mockWeeklyData } from '../data/mock
 import { getTopPerformers } from '../utils/helpers';
 
 const Leaderboard = () => {
+  const [initialData, setInitialData] = useState(mockLeaderboardData);
+
+  // Fetch leaderboard from express backend if available
+  useEffect(() => {
+    let mounted = true;
+    const fetchLeaderboard = async () => {
+      try {
+        const res = await fetch('http://localhost:4000/api/leaderboard');
+        if (!res.ok) throw new Error('Not found');
+        const json = await res.json();
+        if (mounted && Array.isArray(json) && json.length > 0) {
+          setInitialData(json);
+        }
+      } catch (err) {
+        // fallback to mock data (already set)
+        // console.info('Using mock leaderboard data:', err.message);
+      }
+    };
+    fetchLeaderboard();
+    return () => { mounted = false; };
+  }, []);
+
   const {
     data: members,
     filters,
@@ -22,9 +44,9 @@ const Leaderboard = () => {
     updateSearch,
     updateWeekFilter,
     updateSort
-  } = useLeaderboard(mockLeaderboardData);
+  } = useLeaderboard(initialData);
 
-  const topPerformers = getTopPerformers(mockLeaderboardData);
+  const topPerformers = getTopPerformers(initialData);
 
 
 
