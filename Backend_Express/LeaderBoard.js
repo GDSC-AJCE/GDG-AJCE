@@ -76,9 +76,28 @@ function filterRows(rows, { search, track, week, verifiedOnly } = {}) {
 
 function sortRows(rows, field = 'skillBadges', direction = 'desc') {
   const sorted = [...rows].sort((a, b) => {
-    const aV = (a[field] == null) ? 0 : a[field];
-    const bV = (b[field] == null) ? 0 : b[field];
-    if (typeof aV === 'string') return direction === 'asc' ? aV.localeCompare(bV) : bV.localeCompare(aV);
+    const getVal = (obj, key) => (obj[key] == null ? 0 : obj[key]);
+
+    // Primary sort: skillBadges with tie-breakers points -> streak
+    if (field === 'skillBadges') {
+      const aS = getVal(a, 'skillBadges');
+      const bS = getVal(b, 'skillBadges');
+      if (aS !== bS) return direction === 'asc' ? aS - bS : bS - aS;
+
+      // tie-breaker 1: points
+      const aP = getVal(a, 'points');
+      const bP = getVal(b, 'points');
+      if (aP !== bP) return direction === 'asc' ? aP - bP : bP - aP;
+
+      // tie-breaker 2: streak
+      const aSt = getVal(a, 'streak');
+      const bSt = getVal(b, 'streak');
+      return direction === 'asc' ? aSt - bSt : bSt - aSt;
+    }
+
+    const aV = getVal(a, field);
+    const bV = getVal(b, field);
+    if (typeof aV === 'string') return direction === 'asc' ? String(aV).localeCompare(String(bV)) : String(bV).localeCompare(String(aV));
     return direction === 'asc' ? aV - bV : bV - aV;
   });
   return sorted;
@@ -126,7 +145,7 @@ function weeklyData() {
       const w = r.week || 'unknown';
       map[w] = (map[w] || 0) + (r.points || 0);
     });
-    Object.keys(map).forEach((k, i) => weeks.push({ week: k, points: map[k] }));
+  Object.keys(map).forEach(k => weeks.push({ week: k, points: map[k] }));
     return weeks;
   }
 
@@ -160,9 +179,4 @@ module.exports = {
   topPerformers,
   weeklyData,
   exportCSV
-};
-
-module.exports = {
-  readDataFile,
-  rankBySkill
 };

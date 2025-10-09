@@ -29,6 +29,7 @@ const Leaderboard = () => {
           setInitialData(json);
         }
       } catch (err) {
+        console.error('Error fetching leaderboard:', err.message);
         // fallback to mock data (already set)
         // console.info('Using mock leaderboard data:', err.message);
       }
