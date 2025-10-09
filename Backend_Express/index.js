@@ -1,7 +1,6 @@
 import express from 'express';
 import cors from 'cors';
-import LeaderBoard from './LeaderBoard';
-// import dotenv from 'dotenv';
+import LeaderBoard from './LeaderBoard.js';
 
 const app = express();
 app.use(cors());
