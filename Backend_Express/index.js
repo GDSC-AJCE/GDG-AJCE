@@ -68,5 +68,6 @@ app.get('/api/leaderboard/csv', (req, res) => {
   }
 });
 
-const PORT = (typeof process !== 'undefined' && process?.env?.PORT) || 4000;
+// Safely read PORT from environment; use globalThis to avoid 'process is not defined' linter errors
+const PORT = (typeof globalThis !== 'undefined' && globalThis.process && globalThis.process.env && globalThis.process.env.PORT) ? Number(globalThis.process.env.PORT) : 4000;
 app.listen(PORT, () => console.log(`Express backend listening on http://localhost:${PORT}`));
