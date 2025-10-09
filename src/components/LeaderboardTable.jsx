@@ -24,7 +24,24 @@ const LeaderboardTable = ({
     return 'inline-flex h-6 w-6 items-center justify-center rounded-md bg-neutral-200 text-neutral-900 text-xs font-medium';
   };
 
-  const getProfileIcon = (handle) => {
+  const getProfileIcon = (member) => {
+    // If an external profile URL is available, open it in a new tab.
+    if (member.profileUrl) {
+      return (
+        <a
+          href={member.profileUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="inline-flex items-center justify-center w-8 h-8 rounded-full bg-neutral-200 hover:bg-neutral-300 transition-all duration-200 group"
+          title={`Open ${member.name}'s external profile`}
+        >
+          <ExternalLink className="h-4 w-4 text-neutral-700 group-hover:text-neutral-900" />
+        </a>
+      );
+    }
+
+    // Fallback: link to internal profile route using the handle
+    const handle = member.handle || '';
     return (
       <a 
         href={`/profile/${handle.replace('@', '')}`} 
@@ -54,13 +71,17 @@ const LeaderboardTable = ({
               <span className={getRankBadgeClasses(member.rank)}>
                 {member.rank}
               </span>
-              <div className="flex-1 min-w-0">
-                <a 
-                  href={`/profile/${member.handle.replace('@', '')}`} 
-                  className="font-medium text-sm truncate text-neutral-900 hover:text-neutral-700 hover:underline"
-                >
-                  {member.name}
-                </a>
+                <div className="flex-1 min-w-0">
+                {member.handle ? (
+                  <a 
+                    href={`/profile/${member.handle.replace('@', '')}`} 
+                    className="font-medium text-sm truncate text-neutral-900 hover:text-neutral-700 hover:underline"
+                  >
+                    {member.name}
+                  </a>
+                ) : (
+                  <div className="font-medium text-sm truncate text-neutral-900">{member.name}</div>
+                )}
                 <div className="text-xs text-neutral-500 truncate">{member.handle}</div>
               </div>
             </div>
@@ -68,7 +89,7 @@ const LeaderboardTable = ({
             <div className="grid grid-cols-2 gap-4 text-sm">
               <div>
                 <div className="text-xs text-neutral-500 mb-1">Profile</div>
-                {getProfileIcon(member.handle)}
+                {getProfileIcon(member)}
               </div>
               <div>
                 <div className="text-xs text-neutral-500 mb-1">Streak</div>
@@ -160,17 +181,21 @@ const LeaderboardTable = ({
                 </td>
                 <td className="px-4 py-4">
                   <div className="min-w-0">
-                    <a 
-                      href={`/profile/${member.handle.replace('@', '')}`} 
-                      className="font-semibold text-neutral-900 hover:text-neutral-700 hover:underline truncate block"
-                    >
-                      {member.name}
-                    </a>
+                    {member.handle ? (
+                      <a 
+                        href={`/profile/${member.handle.replace('@', '')}`} 
+                        className="font-semibold text-neutral-900 hover:text-neutral-700 hover:underline truncate block"
+                      >
+                        {member.name}
+                      </a>
+                    ) : (
+                      <div className="font-semibold text-neutral-900 truncate block">{member.name}</div>
+                    )}
                     <div className="text-xs text-neutral-500 truncate">{member.handle}</div>
                   </div>
                 </td>
                 <td className="px-4 py-4">
-                  {getProfileIcon(member.handle)}
+                  {getProfileIcon(member)}
                 </td>
                 <td className="px-4 py-4">
                   <div className="flex items-center gap-1">
