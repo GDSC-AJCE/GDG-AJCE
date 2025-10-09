@@ -17,7 +17,7 @@ public class LeaderboardController {
     private final GoogleSheetService googleSheetService;
 
     @GetMapping
-    public List<Map<String, String>> getLeaderboard() throws IOException, GeneralSecurityException {
+    public List<Map<String, Object>> getLeaderboard() throws IOException, GeneralSecurityException {
         return googleSheetService.getSheetData();
     }
 }

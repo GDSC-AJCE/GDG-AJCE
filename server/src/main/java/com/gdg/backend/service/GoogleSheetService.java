@@ -22,15 +22,15 @@ public class GoogleSheetService {
     @Value("${sheet.id}")
     private String SHEET_ID;
 
-    // Include up to column H
+    // Include up to column K
     private static final String RANGE = "Sheet1!A2:K";
 
     public GoogleSheetService(GoogleSheetsConfig googleSheetsConfig) {
         this.googleSheetsConfig = googleSheetsConfig;
     }
 
-    public List<Map<String, String>> getSheetData() {
-        List<Map<String, String>> results = new ArrayList<>();
+    public List<Map<String, Object>> getSheetData() {
+        List<Map<String, Object>> results = new ArrayList<>();
         try {
             Sheets service = googleSheetsConfig.getSheetsService();
             ValueRange response = service.spreadsheets().values().get(SHEET_ID, RANGE).execute();
@@ -42,10 +42,10 @@ public class GoogleSheetService {
             }
 
             for (List<Object> row : values) {
-                Map<String, String> entry = new LinkedHashMap<>();
+                Map<String, Object> entry = new LinkedHashMap<>();
                 entry.put("Name", getCell(row, 0));  // Column A - Username
-                entry.put("No of Skill Badges Completed", getCell(row, 6)); // Column G - # of Skill Badges Completed
-                entry.put("No of Arcade Games Completed", getCell(row, 8)); // Column I - # of Arcade Games Completed
+                entry.put("Skill Badges Completed", parseInt(getCell(row, 6))); // Column G
+                entry.put("Arcade Games Completed", parseInt(getCell(row, 8))); // Column I
                 results.add(entry);
             }
 
@@ -57,5 +57,14 @@ public class GoogleSheetService {
 
     private String getCell(List<Object> row, int index) {
         return (row.size() > index && row.get(index) != null) ? row.get(index).toString() : "";
+    }
+
+    // Utility method to parse integers
+    private int parseInt(String value) {
+        try {
+            return Integer.parseInt(value.trim());
+        } catch (NumberFormatException e) {
+            return 0;
+        }
     }
 }
