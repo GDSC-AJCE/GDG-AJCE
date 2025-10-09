@@ -38,6 +38,7 @@ const Leaderboard = () => {
           id: row.link || row.username || String(row.place || Math.random()),
           name: row.username || row.name || '',
           handle: row.link || row.handle || '',
+          profileUrl: row.profileUrl || row['Profile URL'] || row.link || '',
           modules: row.modules || 0,
           points: row.points || 0,
           streak: row.streak || 0,

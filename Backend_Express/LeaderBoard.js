@@ -13,7 +13,9 @@ function normalizeRows(rows) {
   return rows.map(r => ({
     // common name fields (support many possible CSV/XLSX headers)
     username: r.name || r['User Name'] || r.username || r.Username || r.user || '',
-    link: r.handle || r['Profile URL'] || r.link || r.profile || '',
+  // keep `link`/handle short (e.g., @handle) and expose the external profile URL separately
+  link: r.handle || r.link || r.profile || '',
+  profileUrl: r['Profile URL'] || r['Google Cloud Skills Boost Profile URL'] || r.profileUrl || r.profile || '',
     // streak may not exist in the new CSV; default to 0
     streak: Number(r.streak || r.Streak || 0),
     syllabusCompleted: Number(r.syllabusCompleted || r.SyllabusCompleted || r.syllabus || r.Syllabus || r.syllabusCompleted || 0),
