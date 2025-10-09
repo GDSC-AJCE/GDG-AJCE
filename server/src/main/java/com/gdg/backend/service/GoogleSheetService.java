@@ -23,7 +23,7 @@ public class GoogleSheetService {
     private String SHEET_ID;
 
     // Include up to column H
-    private static final String RANGE = "Sheet1!A2:H";
+    private static final String RANGE = "Sheet1!A2:K";
 
     public GoogleSheetService(GoogleSheetsConfig googleSheetsConfig) {
         this.googleSheetsConfig = googleSheetsConfig;
@@ -44,7 +44,8 @@ public class GoogleSheetService {
             for (List<Object> row : values) {
                 Map<String, String> entry = new LinkedHashMap<>();
                 entry.put("Name", getCell(row, 0));  // Column A - Username
-                entry.put("No of Skill Badges Completed", getCell(row, 7)); // Column H - # of Skill Badges Completed
+                entry.put("No of Skill Badges Completed", getCell(row, 6)); // Column G - # of Skill Badges Completed
+                entry.put("No of Arcade Games Completed", getCell(row, 8)); // Column I - # of Arcade Games Completed
                 results.add(entry);
             }
 
