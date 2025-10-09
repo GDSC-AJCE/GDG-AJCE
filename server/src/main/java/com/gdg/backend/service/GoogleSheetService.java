@@ -44,6 +44,7 @@ public class GoogleSheetService {
             for (List<Object> row : values) {
                 Map<String, Object> entry = new LinkedHashMap<>();
                 entry.put("Name", getCell(row, 0));  // Column A - Username
+                entry.put("Profile URL", getCell(row, 2));  // Column C - Google Cloud Skills Boost Profile URL
                 entry.put("Skill Badges Completed", parseInt(getCell(row, 6))); // Column G
                 entry.put("Arcade Games Completed", parseInt(getCell(row, 8))); // Column I
                 results.add(entry);
