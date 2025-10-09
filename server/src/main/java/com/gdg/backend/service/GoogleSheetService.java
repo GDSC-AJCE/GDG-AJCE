@@ -22,14 +22,15 @@ public class GoogleSheetService {
     @Value("${sheet.id}")
     private String SHEET_ID;
 
-    private static final String RANGE = "Sheet1!A2:D";
+    // Include up to column H
+    private static final String RANGE = "Sheet1!A2:H";
 
     public GoogleSheetService(GoogleSheetsConfig googleSheetsConfig) {
         this.googleSheetsConfig = googleSheetsConfig;
     }
 
-    public List<Map<String, String>> getLeaderboardData() {
-        List<Map<String, String>> leaderboard = new ArrayList<>();
+    public List<Map<String, String>> getSheetData() {
+        List<Map<String, String>> results = new ArrayList<>();
         try {
             Sheets service = googleSheetsConfig.getSheetsService();
             ValueRange response = service.spreadsheets().values().get(SHEET_ID, RANGE).execute();
@@ -37,22 +38,20 @@ public class GoogleSheetService {
 
             if (values == null || values.isEmpty()) {
                 logger.warn("No data found in the sheet.");
-                return leaderboard;
+                return results;
             }
 
             for (List<Object> row : values) {
                 Map<String, String> entry = new LinkedHashMap<>();
-                entry.put("Rank", getCell(row, 0));
-                entry.put("Name", getCell(row, 1));
-                entry.put("Score", getCell(row, 2));
-                entry.put("College", getCell(row, 3));
-                leaderboard.add(entry);
+                entry.put("Name", getCell(row, 0));  // Column A - Username
+                entry.put("No of Skill Badges Completed", getCell(row, 7)); // Column H - # of Skill Badges Completed
+                results.add(entry);
             }
 
         } catch (IOException | GeneralSecurityException e) {
             logger.error("Error fetching Google Sheet data", e);
         }
-        return leaderboard;
+        return results;
     }
 
     private String getCell(List<Object> row, int index) {
