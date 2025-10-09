@@ -11,15 +11,23 @@ const XLSX_FILE = join(DATA_DIR, 'leaderboard.xlsx');
 
 function normalizeRows(rows) {
   return rows.map(r => ({
-    username: r.name || r.username || r.Username || r.user || '',
-    link: r.handle || r.link || r.profile || '',
+    // common name fields (support many possible CSV/XLSX headers)
+    username: r.name || r['User Name'] || r.username || r.Username || r.user || '',
+    link: r.handle || r['Profile URL'] || r.link || r.profile || '',
+    // streak may not exist in the new CSV; default to 0
     streak: Number(r.streak || r.Streak || 0),
     syllabusCompleted: Number(r.syllabusCompleted || r.SyllabusCompleted || r.syllabus || r.Syllabus || r.syllabusCompleted || 0),
-    skillBadges: Number(r.skillBadges || r.SkillBadges || r.badges || r.skill_badges || 0),
-    arcadeGame: Number(r.arcadeGames || r.ArcadeGames || r.arcade || r.arcadeGame || r.arcade_Game || 0),
-    points: Number(r.points || r.Points || r.score || 0),
+    // support both plain and verbose headers from the provided CSV
+    skillBadges: Number(
+      r['# of Skill Badges Completed'] || r['# of Skill Badges & Games Completed'] || r.skillBadges || r.SkillBadges || r.badges || r.skill_badges || 0
+    ),
+    arcadeGame: Number(
+      r['# of Arcade Games Completed'] || r['# of Arcade Games Completed'] || r.arcadeGames || r.ArcadeGames || r.arcade || r.arcadeGame || r.arcade_Game || 0
+    ),
+    // points: if present use it, otherwise compute a simple default score from badges + arcade games
+    points: Number(r.points || r.Points || r.score || 0) || (Number(r['# of Skill Badges Completed'] || r.skillBadges || 0) * 100 + Number(r['# of Arcade Games Completed'] || r.arcadeGames || 0) * 10),
     modules: Number(r.modules || r.Modules || r.modulesCompleted || 0),
-    verified: (r.verified === true) || (String(r.verified || r.Verified || '').toLowerCase() === 'yes')
+    verified: (r.verified === true) || (String(r.verified || r.Verified || r['Profile URL Status'] || '').toLowerCase() === 'yes')
   }));
 }
 
