@@ -1,6 +1,7 @@
-const express = require('express');
-const cors = require('cors');
-const LeaderBoard = require('./LeaderBoard');
+import express from 'express';
+import cors from 'cors';
+import LeaderBoard from './LeaderBoard';
+// import dotenv from 'dotenv';
 
 const app = express();
 app.use(cors());
@@ -68,5 +69,5 @@ app.get('/api/leaderboard/csv', (req, res) => {
   }
 });
 
-const PORT = process.env.PORT || 4000;
+const PORT = (typeof process !== 'undefined' && process?.env?.PORT) || 4000;
 app.listen(PORT, () => console.log(`Express backend listening on http://localhost:${PORT}`));

@@ -9,32 +9,76 @@ import SearchInput from '../components/SearchInput';
 import Dropdown from '../components/Dropdown';
 import LeaderboardTable from '../components/LeaderboardTable';
 
-// Hooks and data
+// Hooks
 import { useLeaderboard } from '../hooks/useLeaderboard';
-import { mockLeaderboardData, mockStatsData, mockWeeklyData } from '../data/mockData';
-import { getTopPerformers } from '../utils/helpers';
 
 const Leaderboard = () => {
-  const [initialData, setInitialData] = useState(mockLeaderboardData);
+  const [initialData, setInitialData] = useState([]);
+  const [stats, setStats] = useState({ participants: 0, totalPoints: 0, avgModules: 0 });
+  const [weeklyData, setWeeklyData] = useState([]);
+  const [topPerf, setTopPerf] = useState([]);
 
-  // Fetch leaderboard from express backend if available
   useEffect(() => {
     let mounted = true;
-    const fetchLeaderboard = async () => {
+
+    const fetchAll = async () => {
       try {
-        const res = await fetch('http://localhost:4000/api/leaderboard');
-        if (!res.ok) throw new Error('Not found');
-        const json = await res.json();
-        if (mounted && Array.isArray(json) && json.length > 0) {
-          setInitialData(json);
+        const [boardRes, statsRes, weeklyRes, topRes] = await Promise.all([
+          fetch('http://localhost:4000/api/leaderboard'),
+          fetch('http://localhost:4000/api/leaderboard/stats'),
+          fetch('http://localhost:4000/api/leaderboard/weekly'),
+          fetch('http://localhost:4000/api/leaderboard/top?n=3')
+        ]);
+
+        if (!boardRes.ok) throw new Error('Leaderboard fetch failed');
+        const boardJson = await boardRes.json();
+
+        // Map backend rows into shape expected by frontend hook/components
+        const mapped = boardJson.map(row => ({
+          id: row.link || row.username || String(row.place || Math.random()),
+          name: row.username || row.name || '',
+          handle: row.link || row.handle || '',
+          modules: row.modules || 0,
+          points: row.points || 0,
+          streak: row.streak || 0,
+          progress: row.progress || 0,
+          lastActivity: row.lastActivity || '',
+          verified: !!row.verified,
+          avatar: row.avatar || '',
+          profileCompleted: row.profileCompleted || 'No',
+          redeemed: row.redeemed || 0,
+          syllabusCompleted: row.syllabusCompleted || row.syllabusCompleted || 0,
+          skillBadges: row.skillBadges || 0,
+          arcadeGames: row.arcadeGame || row.arcadeGames || 0,
+          rank: row.place || null
+        }));
+
+        if (mounted) {
+          setInitialData(mapped);
+        }
+
+        if (statsRes.ok) {
+          const statsJson = await statsRes.json();
+          if (mounted) setStats(statsJson);
+        }
+
+        if (weeklyRes.ok) {
+          const weeklyJson = await weeklyRes.json();
+          if (mounted) setWeeklyData(weeklyJson);
+        }
+
+        if (topRes.ok) {
+          const topJson = await topRes.json();
+          // Map backend top rows to the { member, position } shape expected by TopPerformers
+          const mappedTop = topJson.map(r => ({ member: { id: r.link || r.username, name: r.username || r.name || '', track: r.track || '', points: r.points || 0 }, position: r.place }));
+          if (mounted) setTopPerf(mappedTop);
         }
       } catch (err) {
-        console.error('Error fetching leaderboard:', err.message);
-        // fallback to mock data (already set)
-        // console.info('Using mock leaderboard data:', err.message);
+        console.error('Error fetching leaderboard data:', err.message);
       }
     };
-    fetchLeaderboard();
+
+    fetchAll();
     return () => { mounted = false; };
   }, []);
 
@@ -46,8 +90,6 @@ const Leaderboard = () => {
     updateWeekFilter,
     updateSort
   } = useLeaderboard(initialData);
-
-  const topPerformers = getTopPerformers(initialData);
 
 
 
@@ -95,21 +137,19 @@ const Leaderboard = () => {
       <section className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-8">
         <StatsCard
           title="Participants"
-          value={mockStatsData.participants}
-          change={mockStatsData.participantChange}
+          value={stats.participants}
           icon={Users}
         />
         <StatsCard
           title="Total Points"
-          value={mockStatsData.totalPoints}
-          change={mockStatsData.pointsChange}
+          value={stats.totalPoints}
           changeType="increase"
           icon={Trophy}
           suffix=""
         />
         <StatsCard
           title="Avg. Modules"
-          value={mockStatsData.avgModules}
+          value={stats.avgModules}
           icon={LayoutList}
           suffix=" per member"
         />
@@ -118,10 +158,10 @@ const Leaderboard = () => {
       {/* Top 3 + Chart */}
       <section className="grid grid-cols-1 xl:grid-cols-3 gap-6 mb-8">
         <div className="xl:col-span-2">
-          <TopPerformers performers={topPerformers} />
+          <TopPerformers performers={topPerf} />
         </div>
         <div className="min-h-[300px]">
-          <WeeklyChart data={mockWeeklyData} />
+          <WeeklyChart data={weeklyData} />
         </div>
       </section>
 
