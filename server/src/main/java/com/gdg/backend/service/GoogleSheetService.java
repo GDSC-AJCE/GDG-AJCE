@@ -43,10 +43,56 @@ public class GoogleSheetService {
 
             for (List<Object> row : values) {
                 Map<String, Object> entry = new LinkedHashMap<>();
-                entry.put("Name", getCell(row, 0));  // Column A - Username
-                entry.put("Profile URL", getCell(row, 2));  // Column C - Google Cloud Skills Boost Profile URL
-                entry.put("Skill Badges Completed", parseInt(getCell(row, 6))); // Column G
-                entry.put("Arcade Games Completed", parseInt(getCell(row, 8))); // Column I
+                
+                // Column A - Name/Username
+                entry.put("Name", getCell(row, 0));
+                
+                // Column B - Email (optional, not exposed)
+                // String email = getCell(row, 1);
+                
+                // Column C - Profile URL
+                entry.put("Profile URL", getCell(row, 2));
+                
+                // Column D - Institution (optional)
+                entry.put("Institution", getCell(row, 3));
+                
+                // Column E - Enrollment Status (Yes/No)
+                String enrollmentStatus = getCell(row, 4);
+                entry.put("Enrolled", enrollmentStatus.equalsIgnoreCase("Yes"));
+                
+                // Column F - Profile Completed (Yes/No)
+                String profileCompleted = getCell(row, 5);
+                entry.put("Profile Completed", profileCompleted.equalsIgnoreCase("Yes"));
+                
+                // Column G - Skill Badges Completed (# of Skill Badges Completed)
+                int skillBadges = parseInt(getCell(row, 6));
+                entry.put("Skill Badges Completed", skillBadges);
+                
+                // Column H - Arcade Games (# of Arcade Game Completed)  
+                int arcadeGames = parseInt(getCell(row, 7));
+                entry.put("Arcade Games Completed", arcadeGames);
+                
+                // Column I - Trivia Games (# of Trivia Game Completed)
+                int triviaGames = parseInt(getCell(row, 8));
+                entry.put("Trivia Games Completed", triviaGames);
+                
+                // Column J - Total Completions (Skill Badges + Arcade + Trivia)
+                int totalCompletions = skillBadges + arcadeGames + triviaGames;
+                entry.put("Total Completions", totalCompletions);
+                
+                // Calculate points: Skill Badges = 2 points each, Arcade = 1 point, Trivia = 1 point
+                int points = (skillBadges * 2) + arcadeGames + triviaGames;
+                entry.put("Points", points);
+                
+                // Calculate progress percentage (out of expected completions, e.g., 15 skill badges + 15 arcade games)
+                int expectedTotal = 30; // Adjust based on your program requirements
+                int progress = totalCompletions > 0 ? Math.min(100, (totalCompletions * 100) / expectedTotal) : 0;
+                entry.put("Progress", progress);
+                
+                // Verified status (based on profile completion and enrollment)
+                boolean verified = profileCompleted.equalsIgnoreCase("Yes") && enrollmentStatus.equalsIgnoreCase("Yes");
+                entry.put("Verified", verified);
+                
                 results.add(entry);
             }
 

@@ -12,6 +12,8 @@ export const useLeaderboard = (initialData) => {
     verifiedOnly: false
   });
 
+  const [immediateSearch, setImmediateSearch] = useState(''); // For immediate UI update
+
   const [sortState, setSortState] = useState({
     field: 'points',
     direction: 'desc'
@@ -21,7 +23,7 @@ export const useLeaderboard = (initialData) => {
   const debouncedSetSearch = useCallback(
     debounce((searchTerm) => {
       setFilters(prev => ({ ...prev, search: searchTerm }));
-    }, 300),
+    }, 150), // Reduced from 300ms to 150ms for snappier feel
     []
   );
 
@@ -34,7 +36,8 @@ export const useLeaderboard = (initialData) => {
 
   // Update filter functions
   const updateSearch = useCallback((searchTerm) => {
-    debouncedSetSearch(searchTerm);
+    setImmediateSearch(searchTerm); // Update immediately for UI
+    debouncedSetSearch(searchTerm); // Debounced for filtering
   }, [debouncedSetSearch]);
 
   const updateTrackFilter = useCallback((track) => {
@@ -59,7 +62,7 @@ export const useLeaderboard = (initialData) => {
 
   return {
     data: processedData,
-    filters,
+    filters: { ...filters, search: immediateSearch }, // Use immediate search for display
     sortState,
     updateSearch,
     updateTrackFilter,

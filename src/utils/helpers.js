@@ -21,9 +21,18 @@ export const filterMembers = (members, filters) => {
   return members.filter(member => {
     // Search filter
     if (filters.search) {
-      const searchTerm = filters.search.toLowerCase();
-      const matchesName = member.name.toLowerCase().includes(searchTerm);
-      const matchesHandle = member.handle.toLowerCase().includes(searchTerm);
+      const searchTerm = filters.search.toLowerCase().trim();
+      if (!searchTerm) return true; // Empty search shows all
+      
+      const name = (member.name || '').toLowerCase();
+      const handle = (member.handle || '').toLowerCase();
+      
+      // Quick check: if both are empty, don't match
+      if (!name && !handle) return false;
+      
+      const matchesName = name.includes(searchTerm);
+      const matchesHandle = handle.includes(searchTerm);
+      
       if (!matchesName && !matchesHandle) return false;
     }
 

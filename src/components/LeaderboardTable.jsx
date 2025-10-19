@@ -71,18 +71,8 @@ const LeaderboardTable = ({
               <span className={getRankBadgeClasses(member.rank)}>
                 {member.rank}
               </span>
-                <div className="flex-1 min-w-0">
-                {member.handle ? (
-                  <a 
-                    href={`/profile/${member.handle.replace('@', '')}`} 
-                    className="font-medium text-sm truncate text-neutral-900 hover:text-neutral-700 hover:underline"
-                  >
-                    {member.name}
-                  </a>
-                ) : (
-                  <div className="font-medium text-sm truncate text-neutral-900">{member.name}</div>
-                )}
-                <div className="text-xs text-neutral-500 truncate">{member.handle}</div>
+              <div className="flex-1 min-w-0">
+                <div className="font-medium text-sm truncate text-neutral-900">{member.name}</div>
               </div>
             </div>
             
@@ -181,17 +171,7 @@ const LeaderboardTable = ({
                 </td>
                 <td className="px-4 py-4">
                   <div className="min-w-0">
-                    {member.handle ? (
-                      <a 
-                        href={`/profile/${member.handle.replace('@', '')}`} 
-                        className="font-semibold text-neutral-900 hover:text-neutral-700 hover:underline truncate block"
-                      >
-                        {member.name}
-                      </a>
-                    ) : (
-                      <div className="font-semibold text-neutral-900 truncate block">{member.name}</div>
-                    )}
-                    <div className="text-xs text-neutral-500 truncate">{member.handle}</div>
+                    <div className="font-semibold text-neutral-900 truncate block">{member.name}</div>
                   </div>
                 </td>
                 <td className="px-4 py-4">

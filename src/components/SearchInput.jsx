@@ -10,7 +10,7 @@ const SearchInput = ({ value, onChange, placeholder = "Search members..." }) => 
         placeholder={placeholder}
         value={value}
         onChange={(e) => onChange(e.target.value)}
-        className="w-full rounded-md border border-neutral-200 bg-white pl-9 pr-3 py-2 text-sm text-neutral-900 placeholder-neutral-500 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500/40 focus:border-blue-500 transition-colors"
+        className="w-full rounded-md border border-neutral-200 bg-white pl-9 pr-3 py-2 sm:py-2.5 text-sm text-neutral-900 placeholder-neutral-500 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500/40 focus:border-blue-500 transition-colors"
       />
     </div>
   );
