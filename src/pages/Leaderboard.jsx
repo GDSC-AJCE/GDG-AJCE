@@ -51,15 +51,31 @@ const Leaderboard = () => {
         const boardJson = await boardRes.json();
         console.log('Received data (first item):', boardJson[0]);
 
-        // Sort by points (descending) to establish rankings
-        const sortedByPoints = [...boardJson].sort((a, b) => {
-          const pointsA = a.Points || 0;
-          const pointsB = b.Points || 0;
-          return pointsB - pointsA;
+        // Sort by Skill Badges Completed (descending), then by Arcade Games as tiebreaker
+        const sortedBySkillBadges = [...boardJson].sort((a, b) => {
+          const skillBadgesA = a['Skill Badges Completed'] || 0;
+          const skillBadgesB = b['Skill Badges Completed'] || 0;
+          
+          // Primary sort: Skill Badges
+          if (skillBadgesB !== skillBadgesA) {
+            return skillBadgesB - skillBadgesA;
+          }
+          
+          // Tiebreaker 1: Arcade Games
+          const arcadeA = a['Arcade Games Completed'] || 0;
+          const arcadeB = b['Arcade Games Completed'] || 0;
+          if (arcadeB !== arcadeA) {
+            return arcadeB - arcadeA;
+          }
+          
+          // Tiebreaker 2: Trivia Games
+          const triviaA = a['Trivia Games Completed'] || 0;
+          const triviaB = b['Trivia Games Completed'] || 0;
+          return triviaB - triviaA;
         });
 
         // Map backend rows into shape expected by frontend hook/components
-        const mapped = sortedByPoints.map((row, index) => {
+        const mapped = sortedBySkillBadges.map((row, index) => {
           const totalCompletions = (row['Total Completions'] || 0);
           const skillBadges = (row['Skill Badges Completed'] || 0);
           const arcadeGames = (row['Arcade Games Completed'] || 0);
@@ -91,7 +107,7 @@ const Leaderboard = () => {
             arcadeGames: arcadeGames,
             triviaGames: triviaGames,
             totalCompletions: totalCompletions,
-            rank: index + 1 // Rank based on sorted order
+            rank: index + 1 // Rank based on Skill Badges Completed (with tiebreakers)
           };
         });
 
@@ -118,7 +134,7 @@ const Leaderboard = () => {
           };
           setStats(calculatedStats);
 
-          // Get top 3 performers (already sorted by points)
+          // Get top 3 performers (already sorted by Skill Badges Completed)
           const top3 = mapped.slice(0, 3).map((member, index) => ({
             member: {
               id: member.id,

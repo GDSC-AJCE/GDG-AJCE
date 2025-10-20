@@ -106,7 +106,7 @@ const TopPerformers = ({ performers }) => {
             </div>
             <div className="mt-2 text-sm font-medium truncate w-full px-2">{member.name}</div>
             <div className={`text-xs truncate w-full px-2 ${position === 1 ? 'text-neutral-200' : 'text-neutral-500'}`}>
-              {member.track} • {formatNumber(member.points)} pts
+              {member.skillBadges || 0} Skill Badges
             </div>
           </div>
         ))}
@@ -129,7 +129,7 @@ const TopPerformers = ({ performers }) => {
             </div>
             <div className="mt-2 text-sm font-medium truncate">{member.name}</div>
             <div className={`text-xs truncate ${position === 1 ? 'text-neutral-200' : 'text-neutral-500'}`}>
-              {member.track} • {formatNumber(member.points)} pts
+              {member.skillBadges || 0} Skill Badges
             </div>
           </div>
         ))}

@@ -73,12 +73,47 @@ export const sortMembers = (members, sortField, direction = 'desc') => {
 };
 
 /**
- * Assign ranks to members based on their position in sorted array
+ * Assign ranks to members based on skill badges completed (with tiebreakers)
+ * Ranks are determined by:
+ * 1. Skill Badges Completed (primary)
+ * 2. Arcade Games Completed (tiebreaker 1)
+ * 3. Trivia Games Completed (tiebreaker 2)
+ * This ensures ranks stay consistent regardless of how the table is sorted
  */
 export const assignRanks = (members) => {
-  return members.map((member, index) => ({
+  // Create a copy and sort by skill badges to determine true ranks
+  const sortedBySkillBadges = [...members].sort((a, b) => {
+    const skillBadgesA = a.skillBadges || 0;
+    const skillBadgesB = b.skillBadges || 0;
+    
+    // Primary sort: Skill Badges
+    if (skillBadgesB !== skillBadgesA) {
+      return skillBadgesB - skillBadgesA;
+    }
+    
+    // Tiebreaker 1: Arcade Games
+    const arcadeA = a.arcadeGames || 0;
+    const arcadeB = b.arcadeGames || 0;
+    if (arcadeB !== arcadeA) {
+      return arcadeB - arcadeA;
+    }
+    
+    // Tiebreaker 2: Trivia Games
+    const triviaA = a.triviaGames || 0;
+    const triviaB = b.triviaGames || 0;
+    return triviaB - triviaA;
+  });
+  
+  // Create a map of member ID to rank based on skill badge sorting
+  const rankMap = new Map();
+  sortedBySkillBadges.forEach((member, index) => {
+    rankMap.set(member.id, index + 1);
+  });
+  
+  // Apply the correct ranks to the original array (preserving current sort order)
+  return members.map(member => ({
     ...member,
-    rank: index + 1
+    rank: rankMap.get(member.id) || 999 // Fallback rank for members without ID
   }));
 };
 
