@@ -8,7 +8,7 @@ import java.security.GeneralSecurityException;
 import java.util.List;
 import java.util.Map;
 
-@CrossOrigin("*")
+
 @RestController
 @RequestMapping("/api/leaderboard")
 @RequiredArgsConstructor

@@ -2,7 +2,7 @@ name: Keep Render Backend Alive
 
 on:
   schedule:
-    - cron: "*/5 * * * *"
+    - cron: "*/8 * * * *"
   workflow_dispatch:
 
 jobs:
@@ -10,4 +10,4 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Ping Render backend
-        run: curl -s https://gdg-ajce.onrender.com/api/leaderboard
+        run: curl -s https://gdg-ajce-b80d.onrender.com/api/leaderboard
