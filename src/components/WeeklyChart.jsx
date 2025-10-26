@@ -111,18 +111,18 @@ const WeeklyChart = ({ data }) => {
   };
 
   return (
-    <div className="rounded-lg bg-white border border-neutral-200 p-4 shadow-sm h-full">
-      <div className="flex items-center justify-between mb-3">
-        <h2 className="text-lg font-semibold tracking-tight">Weekly Progress</h2>
+    <div className="rounded-lg bg-white border border-neutral-200 p-3 sm:p-4 shadow-sm h-full flex flex-col">
+      <div className="flex items-center justify-between mb-3 sm:mb-4">
+        <h2 className="text-base sm:text-lg font-semibold tracking-tight">Weekly Progress</h2>
         <span className="text-xs text-neutral-500">Points</span>
       </div>
-      <div className="flex-1">
-        <div className="rounded-md border border-neutral-200 p-2">
-          <div className="relative h-40 sm:h-48">
+      <div className="flex-1 min-h-0">
+        <div className="rounded-md border border-neutral-200 p-2 sm:p-3 h-full">
+          <div className="relative h-[180px] sm:h-[200px] lg:h-[220px]">
             <Line ref={chartRef} data={chartData} options={options} />
           </div>
         </div>
-        <p className="mt-2 text-xs text-neutral-500">Last 6 weeks across all tracks.</p>
+        <p className="mt-2 text-xs text-neutral-500">Cumulative progress over 4 weeks.</p>
       </div>
     </div>
   );

@@ -6,23 +6,23 @@ const StatsCard = ({ title, value, change, changeType = 'increase', icon: Icon, 
   const isPositive = changeType === 'increase';
   
   return (
-    <div className="rounded-lg bg-white border border-neutral-200 p-4 shadow-sm">
-      <div className="flex items-center justify-between mb-3">
-        <p className="text-sm text-neutral-600 truncate">{title}</p>
-        {Icon && <Icon className="h-4 w-4 text-neutral-700 flex-shrink-0" />}
+    <div className="rounded-lg bg-white border border-neutral-200 p-3 sm:p-4 shadow-sm hover:shadow-md transition-shadow">
+      <div className="flex items-center justify-between mb-2 sm:mb-3">
+        <p className="text-xs sm:text-sm text-neutral-600 truncate">{title}</p>
+        {Icon && <Icon className="h-4 w-4 sm:h-5 sm:w-5 text-neutral-700 flex-shrink-0" />}
       </div>
       <div className="flex items-baseline gap-2 flex-wrap">
-        <span className="text-xl sm:text-2xl font-semibold tracking-tight">
-          {formatNumber(value)}{suffix}
+        <span className="text-xl sm:text-2xl lg:text-3xl font-semibold tracking-tight">
+          {formatNumber(value)}<span className="text-sm sm:text-base text-neutral-600">{suffix}</span>
         </span>
         {change !== undefined && (
           <span className={`text-xs inline-flex items-center gap-1 flex-shrink-0 ${
             isPositive ? 'text-green-600' : 'text-red-600'
           }`}>
             {isPositive ? (
-              <TrendingUp className="h-3.5 w-3.5" />
+              <TrendingUp className="h-3 w-3 sm:h-3.5 sm:w-3.5" />
             ) : (
-              <ArrowUpRight className="h-3.5 w-3.5 rotate-180" />
+              <ArrowUpRight className="h-3 w-3 sm:h-3.5 sm:w-3.5 rotate-180" />
             )}
             {typeof change === 'number' ? (
               change % 1 === 0 ? `+${change}` : `+${change}%`
