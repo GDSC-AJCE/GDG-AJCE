@@ -31,8 +31,8 @@ const WeeklyChart = ({ data }) => {
     labels: data.map(item => item.week),
     datasets: [
       {
-        label: 'Points',
-        data: data.map(item => item.points),
+        label: 'Skill Badges',
+        data: data.map(item => item.skillBadges || item.completions || 0),
         borderColor: 'rgb(17,17,17)',
         backgroundColor: (context) => {
           const chart = context.chart;
@@ -73,7 +73,7 @@ const WeeklyChart = ({ data }) => {
         cornerRadius: 6,
         callbacks: {
           title: (context) => context[0].label,
-          label: (context) => `${context.parsed.y.toLocaleString()} points`
+          label: (context) => `${context.parsed.y.toLocaleString()} skill badges`
         }
       }
     },
@@ -114,7 +114,7 @@ const WeeklyChart = ({ data }) => {
     <div className="rounded-lg bg-white border border-neutral-200 p-3 sm:p-4 shadow-sm h-full flex flex-col">
       <div className="flex items-center justify-between mb-3 sm:mb-4">
         <h2 className="text-base sm:text-lg font-semibold tracking-tight">Weekly Progress</h2>
-        <span className="text-xs text-neutral-500">Points</span>
+        <span className="text-xs text-neutral-500">Skill Badges</span>
       </div>
       <div className="flex-1 min-h-0">
         <div className="rounded-md border border-neutral-200 p-2 sm:p-3 h-full">

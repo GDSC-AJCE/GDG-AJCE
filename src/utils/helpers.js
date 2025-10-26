@@ -73,29 +73,29 @@ export const sortMembers = (members, sortField, direction = 'desc') => {
 };
 
 /**
- * Assign ranks to members based on skill badges completed (with tiebreakers)
+ * Assign ranks to members based on arcade games completed (with tiebreakers)
  * Ranks are determined by:
- * 1. Skill Badges Completed (primary)
- * 2. Arcade Games Completed (tiebreaker 1)
+ * 1. Arcade Games Completed (primary)
+ * 2. Skill Badges Completed (tiebreaker 1)
  * 3. Trivia Games Completed (tiebreaker 2)
  * This ensures ranks stay consistent regardless of how the table is sorted
  */
 export const assignRanks = (members) => {
-  // Create a copy and sort by skill badges to determine true ranks
-  const sortedBySkillBadges = [...members].sort((a, b) => {
-    const skillBadgesA = a.skillBadges || 0;
-    const skillBadgesB = b.skillBadges || 0;
-    
-    // Primary sort: Skill Badges
-    if (skillBadgesB !== skillBadgesA) {
-      return skillBadgesB - skillBadgesA;
-    }
-    
-    // Tiebreaker 1: Arcade Games
+  // Create a copy and sort by arcade games to determine true ranks
+  const sortedByArcadeGames = [...members].sort((a, b) => {
     const arcadeA = a.arcadeGames || 0;
     const arcadeB = b.arcadeGames || 0;
+    
+    // Primary sort: Arcade Games
     if (arcadeB !== arcadeA) {
       return arcadeB - arcadeA;
+    }
+    
+    // Tiebreaker 1: Skill Badges
+    const skillBadgesA = a.skillBadges || 0;
+    const skillBadgesB = b.skillBadges || 0;
+    if (skillBadgesB !== skillBadgesA) {
+      return skillBadgesB - skillBadgesA;
     }
     
     // Tiebreaker 2: Trivia Games
@@ -104,9 +104,9 @@ export const assignRanks = (members) => {
     return triviaB - triviaA;
   });
   
-  // Create a map of member ID to rank based on skill badge sorting
+  // Create a map of member ID to rank based on arcade games sorting
   const rankMap = new Map();
-  sortedBySkillBadges.forEach((member, index) => {
+  sortedByArcadeGames.forEach((member, index) => {
     rankMap.set(member.id, index + 1);
   });
   

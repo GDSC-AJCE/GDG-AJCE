@@ -51,21 +51,21 @@ const Leaderboard = () => {
         const boardJson = await boardRes.json();
         console.log('Received data (first item):', boardJson[0]);
 
-        // Sort by Skill Badges Completed (descending), then by Arcade Games as tiebreaker
-        const sortedBySkillBadges = [...boardJson].sort((a, b) => {
-          const skillBadgesA = a['Skill Badges Completed'] || 0;
-          const skillBadgesB = b['Skill Badges Completed'] || 0;
-          
-          // Primary sort: Skill Badges
-          if (skillBadgesB !== skillBadgesA) {
-            return skillBadgesB - skillBadgesA;
-          }
-          
-          // Tiebreaker 1: Arcade Games
+        // Sort by Arcade Games Completed (descending), then by Skill Badges as tiebreaker
+        const sortedByArcadeGames = [...boardJson].sort((a, b) => {
           const arcadeA = a['Arcade Games Completed'] || 0;
           const arcadeB = b['Arcade Games Completed'] || 0;
+          
+          // Primary sort: Arcade Games
           if (arcadeB !== arcadeA) {
             return arcadeB - arcadeA;
+          }
+          
+          // Tiebreaker 1: Skill Badges
+          const skillBadgesA = a['Skill Badges Completed'] || 0;
+          const skillBadgesB = b['Skill Badges Completed'] || 0;
+          if (skillBadgesB !== skillBadgesA) {
+            return skillBadgesB - skillBadgesA;
           }
           
           // Tiebreaker 2: Trivia Games
@@ -75,12 +75,14 @@ const Leaderboard = () => {
         });
 
         // Map backend rows into shape expected by frontend hook/components
-        const mapped = sortedBySkillBadges.map((row, index) => {
+        const mapped = sortedByArcadeGames.map((row, index) => {
           const totalCompletions = (row['Total Completions'] || 0);
           const skillBadges = (row['Skill Badges Completed'] || 0);
           const arcadeGames = (row['Arcade Games Completed'] || 0);
           const triviaGames = (row['Trivia Games Completed'] || 0);
-          const points = row.Points || 0;
+          
+          // Calculate points based on Arcade Games: Arcade = 2 points each, Skill Badges = 1 point, Trivia = 1 point
+          const points = (arcadeGames * 2) + skillBadges + triviaGames;
           
           // Calculate streak based on recent activity (if total > 0, assume active streak)
           // This is a simplified calculation - you may want to track actual dates from the sheet
@@ -107,7 +109,7 @@ const Leaderboard = () => {
             arcadeGames: arcadeGames,
             triviaGames: triviaGames,
             totalCompletions: totalCompletions,
-            rank: index + 1 // Rank based on Skill Badges Completed (with tiebreakers)
+            rank: index + 1 // Rank based on Arcade Games Completed (with tiebreakers)
           };
         });
 
@@ -134,8 +136,30 @@ const Leaderboard = () => {
           };
           setStats(calculatedStats);
 
-          // Get top 3 performers (already sorted by Skill Badges Completed)
-          const top3 = mapped.slice(0, 3).map((member, index) => ({
+          // Get top 3 performers based on Skill Badges Completed
+          // Sort by skill badges for top performers calculation
+          const sortedBySkillBadges = [...mapped].sort((a, b) => {
+            const skillBadgesA = a.skillBadges || 0;
+            const skillBadgesB = b.skillBadges || 0;
+            
+            if (skillBadgesB !== skillBadgesA) {
+              return skillBadgesB - skillBadgesA;
+            }
+            
+            // Tiebreaker: Arcade Games
+            const arcadeA = a.arcadeGames || 0;
+            const arcadeB = b.arcadeGames || 0;
+            if (arcadeB !== arcadeA) {
+              return arcadeB - arcadeA;
+            }
+            
+            // Final tiebreaker: Trivia Games
+            const triviaA = a.triviaGames || 0;
+            const triviaB = b.triviaGames || 0;
+            return triviaB - triviaA;
+          });
+          
+          const top3 = sortedBySkillBadges.slice(0, 3).map((member, index) => ({
             member: {
               id: member.id,
               name: member.name,
@@ -149,14 +173,13 @@ const Leaderboard = () => {
           }));
           setTopPerf(top3);
 
-          // Generate realistic weekly progression data for the chart
-          // Shows gradual increase in points over 4 weeks
-          const currentTotal = calculatedStats.totalPoints;
+          // Generate realistic weekly progression data for the chart based on Skill Badges
+          // Shows gradual increase in skill badges over 4 weeks
           const weeklyProgression = [
-            { week: 'Week 1', points: Math.floor(currentTotal * 0.15), completions: Math.floor(totalSkillBadges * 0.15) },
-            { week: 'Week 2', points: Math.floor(currentTotal * 0.35), completions: Math.floor(totalSkillBadges * 0.35) },
-            { week: 'Week 3', points: Math.floor(currentTotal * 0.65), completions: Math.floor(totalSkillBadges * 0.65) },
-            { week: 'Week 4', points: currentTotal, completions: totalSkillBadges + totalArcadeGames }
+            { week: 'Week 1', skillBadges: Math.floor(totalSkillBadges * 0.15), completions: Math.floor(totalSkillBadges * 0.15) },
+            { week: 'Week 2', skillBadges: Math.floor(totalSkillBadges * 0.35), completions: Math.floor(totalSkillBadges * 0.35) },
+            { week: 'Week 3', skillBadges: Math.floor(totalSkillBadges * 0.65), completions: Math.floor(totalSkillBadges * 0.65) },
+            { week: 'Week 4', skillBadges: totalSkillBadges, completions: totalSkillBadges }
           ];
           setWeeklyData(weeklyProgression);
           

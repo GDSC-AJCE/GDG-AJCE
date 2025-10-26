@@ -4,7 +4,7 @@
  */
 
 // Determine the API base URL based on environment
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'https://gdg-ajce.onrender.com';
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'https://gdg-ajce-b80d.onrender.com';
 
 export const API_ENDPOINTS = {
   leaderboard: `${API_BASE_URL}/api/leaderboard`,

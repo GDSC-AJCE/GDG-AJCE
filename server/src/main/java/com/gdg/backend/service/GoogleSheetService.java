@@ -80,8 +80,8 @@ public class GoogleSheetService {
                 int totalCompletions = skillBadges + arcadeGames + triviaGames;
                 entry.put("Total Completions", totalCompletions);
                 
-                // Calculate points: Skill Badges = 2 points each, Arcade = 1 point, Trivia = 1 point
-                int points = (skillBadges * 2) + arcadeGames + triviaGames;
+                // Calculate points: Arcade Games = 2 points each, Skill Badges = 1 point, Trivia = 1 point
+                int points = (arcadeGames * 2) + skillBadges + triviaGames;
                 entry.put("Points", points);
                 
                 // Calculate progress percentage (out of expected completions, e.g., 15 skill badges + 15 arcade games)

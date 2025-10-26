@@ -15,7 +15,7 @@ export const useLeaderboard = (initialData) => {
   const [immediateSearch, setImmediateSearch] = useState(''); // For immediate UI update
 
   const [sortState, setSortState] = useState({
-    field: 'skillBadges',  // Default sort by skill badges
+    field: 'arcadeGames',  // Default sort by arcade games
     direction: 'desc'
   });
 
