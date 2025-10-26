@@ -1,4 +1,4 @@
-package com.gdg.backend.confg;
+package com.gdg.backend.config;
 
 import com.google.api.client.googleapis.javanet.GoogleNetHttpTransport;
 import com.google.api.client.json.gson.GsonFactory;

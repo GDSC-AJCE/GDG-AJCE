@@ -1,6 +1,6 @@
 package com.gdg.backend.service;
 
-import com.gdg.backend.confg.GoogleSheetsConfig;
+import com.gdg.backend.config.GoogleSheetsConfig;
 import com.google.api.services.sheets.v4.Sheets;
 import com.google.api.services.sheets.v4.model.ValueRange;
 import org.slf4j.Logger;
